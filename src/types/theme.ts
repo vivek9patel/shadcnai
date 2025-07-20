@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { SupportedModel } from "@/lib/models";
 
 const ColorVariablesSchema = z.object({
   background: z.string().describe("Main page background"),
@@ -89,6 +90,7 @@ export type ThemeGenerationLLMResponse = z.infer<
 
 export interface ThemeGenerationRequest {
   user_description: string;
+  model?: SupportedModel;
 }
 
 export interface ThemeGenerationResponse {

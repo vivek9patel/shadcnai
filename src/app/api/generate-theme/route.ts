@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
 import {
   ThemeGenerationLLMResponseSchema,
   type ThemeGenerationRequest,
@@ -8,6 +7,8 @@ import {
 } from "@/types/theme";
 import { checkThemeGenerationRateLimit, getClientIP } from "@/lib/rate-limit";
 import { THEME_GENERATION_PROMPT } from "@/prompts/theme-generation";
+import { getModel, isValidModel } from "@/lib/models";
+import { DEFAULT_MODEL, SUPPORTED_MODELS } from "@/constants/models";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body: ThemeGenerationRequest = await request.json();
-    const { user_description } = body;
+    const { user_description, model = DEFAULT_MODEL } = body;
 
     if (!user_description) {
       return NextResponse.json(
@@ -51,8 +52,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate the model if provided
+    if (model && !isValidModel(model)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Invalid model specified. Supported models: ${SUPPORTED_MODELS.join(
+            ", "
+          )}`,
+        } as ThemeGenerationResponse,
+        { status: 400 }
+      );
+    }
+
+    const selectedModel = getModel(model);
+
     const result = await generateObject({
-      model: openai("gpt-4.1"),
+      model: selectedModel,
       schema: ThemeGenerationLLMResponseSchema,
       prompt: THEME_GENERATION_PROMPT(user_description),
       temperature: 0.7,

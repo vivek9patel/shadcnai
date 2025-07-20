@@ -22,15 +22,17 @@ Generate a complete theme configuration in JSON format based on user description
 
 ## Output Requirements
 You must output ONLY a valid JSON object with two main properties:
-- **theme**: Complete theme configuration matching the schema with all 24 color variables for both light and dark modes, fonts, shadows, radius, spacing, and tracking properties
+- **theme**: Complete theme configuration matching the schema with all required properties
 - **description**: A brief explanation (1-2 sentences) of your design choices and how the theme reflects the user's request
 
-The theme object must include:
-- All 24 color variables for both light and dark modes
-- Complete fonts, shadows, radius, spacing, and tracking properties
-- Hex color codes (#ffffff format) for all colors
-- Accessibility-compliant contrast ratios
-- Cohesive light and dark theme variants
+The theme object must include ALL required properties:
+- Complete color variables for both light and dark modes (32 colors total)
+- Fonts object with sans, serif, and mono font stacks
+- Shadows object with all 8 shadow levels (shadow2xs through shadow2xl)
+- Single radius value as a string (e.g., "0.5rem")
+- trackingNormal as a string (typically "0")
+- spacing as a string (e.g., "1rem")
+- name and displayName strings
 
 ## Color Variable Definitions
 
@@ -74,38 +76,50 @@ The theme object must include:
 - \`sidebarBorder\`: Sidebar borders
 - \`sidebarRing\`: Sidebar focus rings
 
+## Required Schema Properties
+
+### Complete Theme Structure
+The theme object must contain all these properties:
+- name: Theme identifier string
+- displayName: Human readable theme name
+- colors: Object with light and dark modes, each containing all 24 color variables
+- fonts: Object with sans, serif, and mono font stacks
+- shadows: Object with all 8 shadow levels (shadow2xs through shadow2xl)
+- radius: Border radius value as string
+- trackingNormal: Letter spacing value as string
+- spacing: Base spacing unit as string
+
 ## Examples
 
-### Example 1: Gold Theme Request
-**User Input**: "Create a luxurious gold theme"
-**Generate JSON based on User intent**: Generate a theme with warm gold primary colors, rich dark backgrounds for elegance, cream/champagne accents, and ensure high contrast for readability.
+### Example 1: Neo-Brutalism Request
+**User Input**: "Create a neo-brutalist theme"
+**Generate**: Theme with bold, high-contrast colors, chunky boxy shadows with significant depth for a strong 3D effect, sharp geometric feel, and typography that emphasizes the raw, architectural aesthetic.
 
 ### Example 2: Minimalist Request
 **User Input**: "I want something clean and minimal"
-**Generate JSON based on User intent**: Create a theme with plenty of white space, subtle grays, minimal color palette, and focus on typography and spacing.
+**Generate**: Theme with clean colors, subtle grays, minimal palette, proper spacing, clean shadows, and typography focused on readability.
 
 ### Example 3: Nature-Inspired Request
 **User Input**: "Make a forest theme"
-**Generate JSON based on User intent**: Use deep greens as primary, earth tones for secondary, natural browns and warm accents, ensuring both light and dark modes feel organic.
+**Generate**: Theme using deep greens as primary, earth tones for secondary, natural browns, organic feeling across all properties including shadows and typography.
 
-## Guidelines
+## Technical Requirements
 - Use hex color codes (#ffffff format) for all colors
-- Keep radius values reasonable (0.25rem to 1rem typically)
-- Shadow values should progress logically from subtle to prominent
+- Shadow values should use CSS box-shadow syntax (e.g., "1px 1px 2px rgba(0,0,0,0.1)")
 - Font stacks should include web-safe fallbacks
-- Spacing should use rem units for consistency
-- trackingNormal should be "0" for normal letter spacing
-- Always prioritize accessibility over aesthetics
-- Ensure all required schema fields are present and properly formatted
+- Radius should use rem units (e.g., "0.5rem")
+- trackingNormal should typically be "0"
+- spacing should use rem units (e.g., "1rem")
+- Ensure accessibility compliance for all color combinations
 
-##**Quality Checklist — Ensure the following before outputting:**
-- All required JSON fields are present, including all 24 color variables for both light and dark modes.
-- All color choices meet accessibility contrast standards (especially for text and backgrounds).
-- Light and dark themes are visually cohesive and consistent.
-- Color palette and accents clearly reflect the user's described intent.
-- Font stacks are thoughtfully chosen to match the theme's mood and are web-safe.
-- Shadow values progress logically and provide appropriate visual depth.
-- The theme name is relevant and clearly inspired by the user's request.
+## Quality Checklist
+Verify before outputting:
+- All 24 color variables present for both light and dark modes
+- All 8 shadow levels included with proper CSS syntax
+- Font stacks are complete and web-safe
+- Colors meet accessibility contrast standards
+- Theme reflects user's described intent
+- All required JSON fields are present and properly formatted
 
 ## User Request
 Generate a theme based on this description: "${userDescription}".
