@@ -1,5 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
+import { cerebras } from "@ai-sdk/cerebras";
 import { SUPPORTED_MODELS, DEFAULT_MODEL } from "@/constants/models";
 
 export type SupportedModel = (typeof SUPPORTED_MODELS)[number];
@@ -15,6 +16,8 @@ export function getModel(model: SupportedModel = DEFAULT_MODEL) {
       return openai("gpt-4.1");
     case "gemini-2.5-flash":
       return google("gemini-2.5-flash");
+    case "llama-4-scout":
+      return cerebras("llama-4-scout-17b-16e-instruct");
     default:
       // Fallback to default model
       return google(DEFAULT_MODEL);

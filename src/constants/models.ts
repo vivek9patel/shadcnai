@@ -1,7 +1,11 @@
 /**
  * Supported AI models for theme generation
  */
-export const SUPPORTED_MODELS = ["gpt-4.1", "gemini-2.5-flash"] as const;
+export const SUPPORTED_MODELS = [
+  "gpt-4.1",
+  "gemini-2.5-flash",
+  "llama-4-scout",
+] as const;
 
 /**
  * Default model for theme generation

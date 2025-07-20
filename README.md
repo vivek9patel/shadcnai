@@ -1,22 +1,28 @@
 # ShadcnAI Theme Generator
 
-A modern theme generator API powered by Vercel AI SDK and OpenAI GPT-4o that creates beautiful color schemes and design tokens for shadcn/ui components.
+A modern theme generator API powered by Vercel AI SDK that creates beautiful color schemes and design tokens for shadcn/ui components using multiple AI providers.
 
 ## Features
 
-- 🎨 **AI-Powered Theme Generation**: Uses OpenAI GPT-4o to generate coherent color schemes
+- 🎨 **Multi-Provider AI Generation**: Supports OpenAI GPT-4.1, Google Gemini 2.5 Flash, and Cerebras' ultra-fast Llama 4 models
+- ⚡ **World-Record Performance**: Cerebras achieves 2,500+ tokens/sec with Llama 4 Maverick (fastest in the world)
+- 🚀 **Ultra-Fast Scout**: Llama 4 Scout via Cerebras delivers 2,600+ tokens/sec (19x faster than GPUs)
+- 🦙 **Cerebras Powerhouse**: Both Llama 4 Scout and Maverick on the world's fastest inference platform
 - 🛡️ **Rate Limiting**: Built-in DDOS protection with Upstash Redis
 - 🔒 **TypeScript**: Fully typed with Zod schema validation
 - ⚡ **Next.js 15**: Modern App Router with API routes
 - 🚀 **Vercel Ready**: Optimized for Vercel deployment
-- 📊 **Structured Output**: Returns JSON with primary/secondary colors and radius
+- 📊 **Structured Output**: Returns comprehensive theme configurations with colors, fonts, shadows
 
 ## Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- OpenAI API account
+- At least one AI provider account:
+  - OpenAI API account (for GPT-4.1)
+  - Google AI account (for Gemini 2.5 Flash)
+  - Cerebras account (for both Llama 4 models - **world's fastest inference platform**)
 - Upstash Redis account (free tier available)
 
 ### 1. Clone and Install
@@ -35,6 +41,12 @@ Create a `.env.local` file:
 # OpenAI API Configuration
 OPENAI_API_KEY=sk-your-openai-api-key-here
 
+# Google Generative AI Configuration
+GOOGLE_GENERATIVE_AI_API_KEY=your-google-generative-ai-api-key-here
+
+# Cerebras API Configuration (world's fastest inference)
+CEREBRAS_API_KEY=your-cerebras-api-key-here
+
 # Upstash Redis Configuration (for rate limiting)
 UPSTASH_REDIS_REST_URL=https://your-redis-endpoint.upstash.io
 UPSTASH_REDIS_REST_TOKEN=your-upstash-redis-token
@@ -51,6 +63,33 @@ NODE_ENV=development
 2. Sign up/login and go to API keys
 3. Create a new secret key
 4. Copy the key to your `.env.local`
+
+#### Google AI API Key
+
+1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Sign up/login and create a new API key
+3. Copy the key to your `.env.local`
+
+#### Groq API Key (Recommended)
+
+1. Go to [Groq Console](https://console.groq.com/)
+2. Sign up/login and go to API Keys
+3. Create a new API key
+4. Copy the key to your `.env.local`
+
+#### Cerebras API Key (World's Fastest Inference)
+
+1. Go to [Cerebras Console](https://inference.cerebras.ai/)
+2. Sign up/login and navigate to API Keys
+3. Create a new API key
+4. Copy the key to your `.env.local`
+
+**Why Cerebras?**
+- 🏆 **World-Record Speed**: 2,600+ tokens/sec for Scout, 2,500+ for Maverick (fastest in the world)
+- 🥇 **Unified Platform**: Both Llama 4 models on the same ultra-fast infrastructure
+- 🧠 **Optimal Performance**: Choose Scout for speed, Maverick for complexity
+- 🇺🇸 **US-Based**: 100% US infrastructure with zero data retention
+- ⚡ **Instant Responses**: Real-time inference for all your AI needs
 
 #### Upstash Redis Setup
 
@@ -262,6 +301,8 @@ src/
 Environment variables needed in Vercel:
 
 - `OPENAI_API_KEY`
+- `GOOGLE_GENERATIVE_AI_API_KEY`
+- `CEREBRAS_API_KEY`
 - `UPSTASH_REDIS_REST_URL`
 - `UPSTASH_REDIS_REST_TOKEN`
 

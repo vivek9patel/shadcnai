@@ -9,8 +9,9 @@ import { checkThemeGenerationRateLimit, getClientIP } from "@/lib/rate-limit";
 import { THEME_GENERATION_PROMPT } from "@/prompts/theme-generation";
 import { getModel, isValidModel } from "@/lib/models";
 import { DEFAULT_MODEL, SUPPORTED_MODELS } from "@/constants/models";
+import { withAuth } from "@/lib/auth";
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async function POST(request: NextRequest) {
   try {
     const clientIP = getClientIP(request);
 
@@ -105,9 +106,9 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function GET() {
+export const GET = withAuth(async function GET() {
   return NextResponse.json(
     {
       success: false,
@@ -115,4 +116,4 @@ export async function GET() {
     },
     { status: 405 }
   );
-}
+});
