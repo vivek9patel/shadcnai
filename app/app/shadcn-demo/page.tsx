@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   CalendarDays,
   Download,
@@ -195,6 +196,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function ShadcnDemo() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -207,13 +209,18 @@ export default function ShadcnDemo() {
         {/* Header */}
         <div className="border-b">
           <div className="container mx-auto px-4 py-6">
-            <h1 className="text-4xl font-bold tracking-tight">
-              shadcn/ui Component Demo
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              A comprehensive showcase of all shadcn/ui components for theme
-              testing
-            </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-4xl font-bold tracking-tight">
+                  shadcn/ui Component Demo
+                </h1>
+                <p className="text-muted-foreground mt-2">
+                  A comprehensive showcase of all shadcn/ui components for theme
+                  testing
+                </p>
+              </div>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
 
@@ -1045,6 +1052,52 @@ export default function ShadcnDemo() {
                     </CommandGroup>
                   </CommandList>
                 </Command>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Startup Demo */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-semibold">Real-World Example</h2>
+
+            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <span>🚀</span>
+                  <span>TaskFlow - Startup Demo</span>
+                </CardTitle>
+                <CardDescription>
+                  See all shadcn/ui components in action with a complete startup
+                  website
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  Explore a fully functional startup website featuring TaskFlow,
+                  a project management platform. This demo showcases how
+                  shadcn/ui components work together in a real-world
+                  application.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">Landing Page</Badge>
+                  <Badge variant="secondary">Pricing</Badge>
+                  <Badge variant="secondary">Features</Badge>
+                  <Badge variant="secondary">Contact Forms</Badge>
+                  <Badge variant="secondary">Dashboard</Badge>
+                  <Badge variant="secondary">About Page</Badge>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button asChild>
+                    <Link href="/shadcn-demo/my-fancy-startup">
+                      Visit TaskFlow Demo
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/shadcn-demo/my-fancy-startup/dashboard">
+                      View Dashboard
+                    </Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </section>

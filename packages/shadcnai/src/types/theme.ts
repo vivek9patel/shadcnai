@@ -1,38 +1,50 @@
 import { z } from "zod";
 
 const ColorVariablesSchema = z.object({
-  background: z.string().describe("Main page background"),
-  foreground: z.string().describe("Primary text color"),
-  card: z.string().describe("Card/container background"),
-  cardForeground: z.string().describe("Card text color"),
-  popover: z.string().describe("Popup/dropdown background"),
-  popoverForeground: z.string().describe("Popup text color"),
-  primary: z.string().describe("Main brand/action color"),
-  primaryForeground: z.string().describe("Primary button text"),
-  secondary: z.string().describe("Secondary action color"),
-  secondaryForeground: z.string().describe("Secondary button text"),
-  muted: z.string().describe("Subdued background for less important content"),
-  mutedForeground: z.string().describe("Subtle text color"),
-  accent: z.string().describe("Highlight/emphasis color"),
-  accentForeground: z.string().describe("Accent text color"),
-  destructive: z.string().describe("Error/danger color"),
-  destructiveForeground: z.string().describe("Error text color"),
-  border: z.string().describe("Element borders"),
-  input: z.string().describe("Input field backgrounds"),
-  ring: z.string().describe("Focus ring color"),
-  chart1: z.string().describe("Chart color 1"),
-  chart2: z.string().describe("Chart color 2"),
-  chart3: z.string().describe("Chart color 3"),
-  chart4: z.string().describe("Chart color 4"),
-  chart5: z.string().describe("Chart color 5"),
-  sidebar: z.string().describe("Sidebar background"),
-  sidebarForeground: z.string().describe("Sidebar text"),
-  sidebarPrimary: z.string().describe("Sidebar primary elements"),
-  sidebarPrimaryForeground: z.string().describe("Sidebar primary text"),
-  sidebarAccent: z.string().describe("Sidebar accent elements"),
-  sidebarAccentForeground: z.string().describe("Sidebar accent text"),
-  sidebarBorder: z.string().describe("Sidebar borders"),
-  sidebarRing: z.string().describe("Sidebar focus rings"),
+  background: z.string().describe("Main page background (RGB format)"),
+  foreground: z.string().describe("Primary text color (RGB format)"),
+  card: z.string().describe("Card/container background (RGB format)"),
+  "card-foreground": z.string().describe("Card text color (RGB format)"),
+  popover: z.string().describe("Popup/dropdown background (RGB format)"),
+  "popover-foreground": z.string().describe("Popup text color (RGB format)"),
+  primary: z.string().describe("Main brand/action color (RGB format)"),
+  "primary-foreground": z.string().describe("Primary button text (RGB format)"),
+  secondary: z.string().describe("Secondary action color (RGB format)"),
+  "secondary-foreground": z
+    .string()
+    .describe("Secondary button text (RGB format)"),
+  muted: z
+    .string()
+    .describe("Subdued background for less important content (RGB format)"),
+  "muted-foreground": z.string().describe("Subtle text color (RGB format)"),
+  accent: z.string().describe("Highlight/emphasis color (RGB format)"),
+  "accent-foreground": z.string().describe("Accent text color (RGB format)"),
+  destructive: z.string().describe("Error/danger color (RGB format)"),
+  "destructive-foreground": z
+    .string()
+    .describe("Error text color (RGB format)"),
+  border: z.string().describe("Element borders (RGB format)"),
+  input: z.string().describe("Input field backgrounds (RGB format)"),
+  ring: z.string().describe("Focus ring color (RGB format)"),
+  "chart-1": z.string().describe("Chart color 1 (RGB format)"),
+  "chart-2": z.string().describe("Chart color 2 (RGB format)"),
+  "chart-3": z.string().describe("Chart color 3 (RGB format)"),
+  "chart-4": z.string().describe("Chart color 4 (RGB format)"),
+  "chart-5": z.string().describe("Chart color 5 (RGB format)"),
+  sidebar: z.string().describe("Sidebar background (RGB format)"),
+  "sidebar-foreground": z.string().describe("Sidebar text (RGB format)"),
+  "sidebar-primary": z
+    .string()
+    .describe("Sidebar primary elements (RGB format)"),
+  "sidebar-primary-foreground": z
+    .string()
+    .describe("Sidebar primary text (RGB format)"),
+  "sidebar-accent": z.string().describe("Sidebar accent elements (RGB format)"),
+  "sidebar-accent-foreground": z
+    .string()
+    .describe("Sidebar accent text (RGB format)"),
+  "sidebar-border": z.string().describe("Sidebar borders (RGB format)"),
+  "sidebar-ring": z.string().describe("Sidebar focus rings (RGB format)"),
 });
 
 const ThemeColorsSchema = z.object({
@@ -58,14 +70,12 @@ const ShadowsSchema = z.object({
 });
 
 export const ThemeSchema = z.object({
-  name: z.string().describe("Theme identifier"),
+  name: z.string().describe("Theme identifier (kebab-case)"),
   displayName: z.string().describe("Human-readable theme name"),
   colors: ThemeColorsSchema,
-  fonts: FontsSchema,
+  // fonts: FontsSchema,
   radius: z.string().describe("Border radius (e.g., '0.5rem')"),
   shadows: ShadowsSchema,
-  trackingNormal: z.string().describe("Normal letter spacing"),
-  spacing: z.string().describe("Base spacing unit"),
 });
 
 // Schema for the complete LLM response
@@ -85,4 +95,4 @@ export type Shadows = z.infer<typeof ShadowsSchema>;
 export type Theme = z.infer<typeof ThemeSchema>;
 export type ThemeGenerationLLMResponse = z.infer<
   typeof ThemeGenerationLLMResponseSchema
->; 
+>;

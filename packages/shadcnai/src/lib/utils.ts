@@ -4,6 +4,8 @@
 
 import { readFileSync, readdirSync, existsSync } from "fs";
 import { createInterface } from "readline";
+import { spawn } from "child_process";
+import { ThemeGenerationLLMResponse } from "../types/theme";
 
 /**
  * Check if a string is empty or contains only whitespace
@@ -122,4 +124,160 @@ export function setEnvironmentVariables(envVars: Record<string, string>): void {
   Object.entries(envVars).forEach(([key, value]) => {
     process.env[key] = value;
   });
+}
+
+/**
+ * Supported package managers for running shadcn CLI
+ */
+export const PACKAGE_MANAGERS = [
+  { name: "npm", command: "npx" },
+  { name: "yarn", command: "yarn dlx" },
+  { name: "pnpm", command: "pnpm dlx" },
+  { name: "bun", command: "bunx" },
+] as const;
+
+export type PackageManager = (typeof PACKAGE_MANAGERS)[number];
+
+/**
+ * Prompt user to select a package manager
+ */
+export function promptPackageManager(): Promise<PackageManager> {
+  return new Promise((resolve) => {
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    console.log("\n📦 Select your package manager:");
+    PACKAGE_MANAGERS.forEach((pm, index) => {
+      console.log(`  ${index + 1}. ${pm.name} (${pm.command})`);
+    });
+
+    rl.question("\nEnter your choice (1-4) [default: 1]: ", (answer) => {
+      rl.close();
+      const choice = parseInt(answer.trim()) || 1;
+      const selectedIndex =
+        Math.max(1, Math.min(choice, PACKAGE_MANAGERS.length)) - 1;
+      resolve(PACKAGE_MANAGERS[selectedIndex]);
+    });
+  });
+}
+
+/**
+ * Execute a shell command with proper error handling
+ */
+export function executeCommand(command: string, args: string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const process = spawn(command, args, {
+      stdio: "inherit",
+      shell: true,
+    });
+
+    process.on("close", (code) => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Command failed with exit code ${code}`));
+      }
+    });
+
+    process.on("error", (error) => {
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Import theme using shadcn CLI and cleanup temporary file
+ */
+export async function importThemeWithShadcn(
+  registryPath: string,
+  packageManager?: PackageManager
+): Promise<void> {
+  try {
+    // Use provided package manager or default to npm
+    const pm = packageManager || PACKAGE_MANAGERS[0]; // Default to npm
+
+    console.log(`\n🚀 Importing theme using ${pm.name}...`);
+
+    // Build command arguments
+    const [baseCommand, ...baseArgs] = pm.command.split(" ");
+    const args = [...baseArgs, "shadcn@latest", "add", registryPath, "-y"];
+
+    console.log(`Running: ${pm.command} shadcn@latest add ${registryPath}`);
+
+    // Execute the shadcn add command
+    await executeCommand(baseCommand, args);
+
+    console.log("✅ Theme imported successfully!");
+
+    // Clean up the temporary file
+    try {
+      const fs = await import("fs");
+      fs.unlinkSync(registryPath);
+    } catch (cleanupError) {
+      console.warn(
+        "⚠️  Warning: Could not clean up temporary file:",
+        registryPath
+      );
+    }
+  } catch (error) {
+    console.error(
+      "❌ Error importing theme:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
+    console.error("\n💡 Manual import options:");
+    console.error(`• Run: npx shadcn@latest add ${registryPath}`);
+    console.error(`• Or: yarn dlx shadcn@latest add ${registryPath}`);
+    console.error(`• Or: pnpm dlx shadcn@latest add ${registryPath}`);
+    throw error;
+  }
+}
+
+/**
+ * Transform our theme generation response to shadcn/ui registry format
+ */
+export function transformToRegistryTheme(
+  response: ThemeGenerationLLMResponse
+): any {
+  const { theme, description } = response;
+
+  // Helper function to convert camelCase shadow keys to kebab-case
+  const transformShadows = (shadows: Record<string, string>) => {
+    const transformed: Record<string, string> = {};
+    Object.entries(shadows).forEach(([key, value]) => {
+      const kebabKey = key.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+      transformed[kebabKey] = value;
+    });
+    return transformed;
+  };
+
+  // Transform shadows to kebab-case format
+  const shadowsKebab = transformShadows(theme.shadows);
+
+  // Create the complete light theme section
+  const lightSection = {
+    ...theme.colors.light,
+    radius: theme.radius,
+    ...shadowsKebab,
+  };
+
+  const darkSection = {
+    ...theme.colors.dark,
+  };
+
+  // Create registry theme object
+  const registryTheme = {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: theme.name,
+    type: "registry:theme" as const,
+    title: theme.displayName,
+    description: description,
+    cssVars: {
+      light: lightSection,
+      dark: darkSection,
+    },
+  };
+
+  return registryTheme;
 }

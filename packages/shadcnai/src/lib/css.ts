@@ -1,20 +1,13 @@
 import type { Theme, ColorVariables } from '../types/theme';
 
 /**
- * Convert camelCase to kebab-case for CSS variables
- */
-function toKebabCase(str: string): string {
-  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
-/**
- * Generate CSS variables for color variables
+ * Generate CSS variables for color variables (already kebab-case)
  */
 function generateColorVariables(colors: ColorVariables, indent = '  '): string {
   const vars: string[] = [];
   
   Object.entries(colors).forEach(([key, value]) => {
-    const cssVar = `--${toKebabCase(key)}: ${value};`;
+    const cssVar = `--${key}: ${value};`;
     vars.push(`${indent}${cssVar}`);
   });
   
@@ -37,15 +30,20 @@ function generateFontVariables(fonts: { sans: string; serif: string; mono: strin
 /**
  * Generate CSS variables for shadows
  */
-function generateShadowVariables(shadows: Record<string, string>, indent = '  '): string {
+function generateShadowVariables(
+  shadows: Record<string, string>,
+  indent = "  "
+): string {
   const vars: string[] = [];
-  
+
   Object.entries(shadows).forEach(([key, value]) => {
-    const cssVar = `--${toKebabCase(key)}: ${value};`;
+    // Convert camelCase shadow names to kebab-case
+    const kebabKey = key.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+    const cssVar = `--${kebabKey}: ${value};`;
     vars.push(`${indent}${cssVar}`);
   });
-  
-  return vars.join('\n');
+
+  return vars.join("\n");
 }
 
 /**
@@ -53,17 +51,15 @@ function generateShadowVariables(shadows: Record<string, string>, indent = '  ')
  */
 function generateRootSection(theme: Theme): string {
   const lines = [
-    ':root {',
+    ":root {",
     generateColorVariables(theme.colors.light),
-    generateFontVariables(theme.fonts),
+    // generateFontVariables(theme.fonts),
     `  --radius: ${theme.radius};`,
     generateShadowVariables(theme.shadows),
-    `  --tracking-normal: ${theme.trackingNormal};`,
-    `  --spacing: ${theme.spacing};`,
-    '}'
+    "}",
   ];
-  
-  return lines.join('\n');
+
+  return lines.join("\n");
 }
 
 /**
@@ -71,13 +67,13 @@ function generateRootSection(theme: Theme): string {
  */
 function generateDarkSection(theme: Theme): string {
   const lines = [
-    '',
-    '.dark {',
+    "",
+    ".dark {",
     generateColorVariables(theme.colors.dark),
-    generateFontVariables(theme.fonts),
+    // generateFontVariables(theme.fonts),
     `  --radius: ${theme.radius};`,
     generateShadowVariables(theme.shadows),
-    '}'
+    "}",
   ];
   
   return lines.join('\n');

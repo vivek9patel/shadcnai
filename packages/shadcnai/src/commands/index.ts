@@ -1,1 +1,1 @@
-export { generateCommand } from './generate'; 
+export { themeCommand } from "./theme";

@@ -119,4 +119,37 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Chart styling improvements */
+  [data-slot="chart"] {
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Better chart tooltip styling */
+  .recharts-tooltip-wrapper {
+    outline: none !important;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Chart grid and axis styling */
+  .recharts-cartesian-grid line,
+  .recharts-polar-grid circle {
+    stroke: hsl(var(--border));
+    opacity: 0.4;
+  }
+
+  /* Chart hover effects */
+  .recharts-bar:hover,
+  .recharts-area:hover,
+  .recharts-line:hover {
+    filter: brightness(1.1);
+    transition: filter 0.2s ease-in-out;
+  }
+
+  /* Active chart elements */
+  .recharts-active-dot {
+    filter: drop-shadow(0 0 6px currentColor);
+  }
 }

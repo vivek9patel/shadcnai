@@ -30,8 +30,6 @@ The theme object must include ALL required properties:
 - Fonts object with sans, serif, and mono font stacks
 - Shadows object with all 8 shadow levels (shadow2xs through shadow2xl)
 - Single radius value as a string (e.g., "0.5rem")
-- trackingNormal as a string (typically "0")
-- spacing as a string (e.g., "1rem")
 - name and displayName strings
 
 ## Color Variable Definitions
@@ -44,37 +42,37 @@ The theme object must include ALL required properties:
 
 ### Interactive Elements
 - \`primary\`: Main brand/action color
-- \`primaryForeground\`: Primary button text
+- \`primary-foreground\`: Primary button text
 - \`secondary\`: Secondary action color
-- \`secondaryForeground\`: Secondary button text
+- \`secondary-foreground\`: Secondary button text
 
 ### UI States
 - \`muted\`: Subdued background for less important content
-- \`mutedForeground\`: Subtle text color
+- \`muted-foreground\`: Subtle text color
 - \`accent\`: Highlight/emphasis color
-- \`accentForeground\`: Accent text color
+- \`accent-foreground\`: Accent text color
 - \`destructive\`: Error/danger color
-- \`destructiveForeground\`: Error text color
+- \`destructive-foreground\`: Error text color
 
 ### Form & Navigation
 - \`border\`: Element borders
 - \`input\`: Input field backgrounds
 - \`ring\`: Focus ring color
 - \`popover\`: Popup/dropdown background
-- \`popoverForeground\`: Popup text color
+- \`popover-foreground\`: Popup text color
 
 ### Data Visualization
-- \`chart1\` through \`chart5\`: Distinct colors for charts/graphs
+- \`chart-1\` through \`chart-5\`: Distinct colors for charts/graphs (note the hyphens!)
 
 ### Sidebar Components
 - \`sidebar\`: Sidebar background
-- \`sidebarForeground\`: Sidebar text
-- \`sidebarPrimary\`: Sidebar primary elements
-- \`sidebarPrimaryForeground\`: Sidebar primary text
-- \`sidebarAccent\`: Sidebar accent elements
-- \`sidebarAccentForeground\`: Sidebar accent text
-- \`sidebarBorder\`: Sidebar borders
-- \`sidebarRing\`: Sidebar focus rings
+- \`sidebar-foreground\`: Sidebar text
+- \`sidebar-primary\`: Sidebar primary elements
+- \`sidebar-primary-foreground\`: Sidebar primary text
+- \`sidebar-accent\`: Sidebar accent elements
+- \`sidebar-accent-foreground\`: Sidebar accent text
+- \`sidebar-border\`: Sidebar borders
+- \`sidebar-ring\`: Sidebar focus rings
 
 ## Required Schema Properties
 
@@ -86,8 +84,6 @@ The theme object must contain all these properties:
 - fonts: Object with sans, serif, and mono font stacks
 - shadows: Object with all 8 shadow levels (shadow2xs through shadow2xl)
 - radius: Border radius value as string
-- trackingNormal: Letter spacing value as string
-- spacing: Base spacing unit as string
 
 ## Examples
 
@@ -104,12 +100,11 @@ The theme object must contain all these properties:
 **Generate**: Theme using deep greens as primary, earth tones for secondary, natural browns, organic feeling across all properties including shadows and typography.
 
 ## Technical Requirements
-- Use hex color codes (#ffffff format) for all colors
+- Use RGB values with rgb() wrapper (e.g., "rgb(255, 255, 255)" not just "255 255 255" or hex values "#ffffff")
+- All color variable names use kebab-case (e.g., "card-foreground", "chart-1")
 - Shadow values should use CSS box-shadow syntax (e.g., "1px 1px 2px rgba(0,0,0,0.1)")
 - Font stacks should include web-safe fallbacks
 - Radius should use rem units (e.g., "0.5rem")
-- trackingNormal should typically be "0"
-- spacing should use rem units (e.g., "1rem")
 - Ensure accessibility compliance for all color combinations
 
 ## Quality Checklist
@@ -128,4 +123,4 @@ Output only a JSON object with this structure:
 {
   "theme": { /* complete theme object with all required fields */ },
   "description": "Brief explanation of your design choices and how the theme reflects the user's request"
-}`; 
+}`;
