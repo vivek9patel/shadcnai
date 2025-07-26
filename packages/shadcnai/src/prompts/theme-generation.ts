@@ -128,4 +128,4 @@ Output only a JSON object with this structure:
 {
   "theme": { /* complete theme object with all required fields */ },
   "description": "Brief explanation of your design choices and how the theme reflects the user's request"
-}`;
+}`; 

@@ -10,4 +10,4 @@ export const SUPPORTED_MODELS = [
 /**
  * Default model for theme generation
  */
-export const DEFAULT_MODEL = "gemini-2.5-flash" as const;
+export const DEFAULT_MODEL = "gemini-2.5-flash" as const; 

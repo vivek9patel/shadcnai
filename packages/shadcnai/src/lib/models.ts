@@ -1,7 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
 import { cerebras } from "@ai-sdk/cerebras";
-import { SUPPORTED_MODELS, DEFAULT_MODEL } from "@/constants/models";
+import { SUPPORTED_MODELS, DEFAULT_MODEL } from "../constants/models";
 
 export type SupportedModel = (typeof SUPPORTED_MODELS)[number];
 
@@ -31,4 +31,4 @@ export function getModel(model: SupportedModel = DEFAULT_MODEL) {
  */
 export function isValidModel(model: string): model is SupportedModel {
   return SUPPORTED_MODELS.includes(model as SupportedModel);
-}
+} 
