@@ -1,70 +1,45 @@
-# shadcn/ui Theme Generator Monorepo
+# shadcnai
 
-This monorepo contains the shadcn/ui theme generator project with the following packages:
+A CLI tool for generating beautiful shadcn/ui themes using using natural language descriptions.
 
-## Packages
-
-- **`server/`** - Next.js web application for theme generation
-- **`packages/`** - Directory for future CLI packages and utilities
-
-## Getting Started
-
-### Environment Setup
-
-1. Copy the environment example file:
-```bash
-cp .env.example .env.local
-```
-
-2. Fill in your API keys and configuration in `.env.local`
-
-### Development
-
-To start the development server:
+## Quick Start
 
 ```bash
-npm run server
+# Set your API key
+export GOOGLE_GENERATIVE_AI_API_KEY=your-google-ai-key
+
+# Generate a theme
+npx shadcnai theme "neo brutalism theme with pink sunset vibes"
 ```
 
-This will start the Next.js server in development mode.
-
-### Building
-
-To build the server:
+## More Usage Examples
 
 ```bash
-npm run build:server
+# Generate a dark purple theme
+npx shadcnai theme "dark theme with purple accents"
+
+# Use specific AI model
+npx shadcnai theme "ocean sunset colors" --model gpt-4.1
+
+# Generate and save without auto-import
+npx shadcnai theme "clean matrix movie style theme" --no-import
+
+# Specify package manager
+npx shadcnai theme "minimalist design" --package-manager pnpm
 ```
 
-### Running in Production
+## Supported Models
 
-To start the production server:
+- `gemini-2.5-flash` (Google AI, **default**)
+- `gpt-4.1` (OpenAI)
+- `llama-4-scout` (Cerebras)
 
-```bash
-npm run start:server
-```
+## Package
 
-### Linting
+- **[`packages/shadcnai/`](./packages/shadcnai/)** - The main CLI package with full documentation
 
-To lint the server code:
+## Special Mentions
 
-```bash
-npm run lint:server
-```
-
-## Project Structure
-
-```
-.
-├── server/                 # Next.js application
-│   ├── src/               # Source code
-│   ├── package.json       # Server dependencies
-│   └── ...               # Other server files
-├── packages/              # Future CLI packages
-├── package.json           # Root package.json (monorepo config)
-└── README.md             # This file
-```
-
-## Contributing
-
-Each package has its own README with specific instructions. See the individual package directories for more details. 
+Built with:
+- **[AI SDK](https://sdk.vercel.ai/)** - For AI model integrations
+- **[shadcn/ui](https://ui.shadcn.com/)** - For the component system 
