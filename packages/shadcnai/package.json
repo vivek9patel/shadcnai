@@ -40,7 +40,7 @@
   "bugs": {
     "url": "https://github.com/vivek9patel/shadcnai/issues"
   },
-  "homepage": "https://github.com/vivek9patel/shadcnai#readme",
+  "homepage": "https://shadcnai.com",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
