@@ -1,17 +1,17 @@
 ---
 title: AI Models
-description: Choose from 20+ AI models across 7 different providers for theme generation
+description: Choose from 30+ AI models across 7 different providers for theme generation
 ---
 
 # AI Models
 
-shadcnai supports 20+ AI models across 7 different providers, each with unique strengths for theme generation.
+shadcnai supports 30+ AI models across 7 different providers, each with unique strengths for theme generation.
 
 ## Provider Overview
 
 | Provider      | Models   | Best For                            | API Key Required               |
 | ------------- | -------- | ----------------------------------- | ------------------------------ |
-| **Google AI** | 3 models | Balanced, accessible themes         | `GOOGLE_GENERATIVE_AI_API_KEY` |
+| **Google AI** | 5 models | Balanced, accessible themes         | `GOOGLE_GENERATIVE_AI_API_KEY` |
 | **OpenAI**    | 4 models | Creative, innovative designs        | `OPENAI_API_KEY`               |
 | **Anthropic** | 5 models | Sophisticated, context-aware themes | `ANTHROPIC_API_KEY`            |
 | **xAI**       | 3 models | Unique, experimental approaches     | `XAI_API_KEY`                  |
@@ -21,24 +21,44 @@ shadcnai supports 20+ AI models across 7 different providers, each with unique s
 
 ## Google AI Models
 
-### `gemini-2.0-flash-exp` (Experimental)
+### `gemini-2.5-flash` (Default ⭐)
 
-- **Best for**: Cutting-edge theme generation
-- **Strengths**: Latest AI capabilities, experimental features
-- **Use cases**: Innovative designs, testing new approaches
-
-```bash
-shadcnai theme "futuristic AI interface" --model gemini-2.0-flash-exp
-```
-
-### `gemini-1.5-flash` (Default ⭐)
-
-- **Best for**: General-purpose theme generation
-- **Strengths**: Fast, reliable, great color harmony
-- **Use cases**: Business apps, professional websites
+- **Best for**: Latest generation theme creation
+- **Strengths**: Fast, reliable, excellent color harmony
+- **Use cases**: General-purpose theme generation, business apps
 
 ```bash
 shadcnai theme "corporate dashboard with professional blue tones"
+```
+
+### `gemini-2.0-flash`
+
+- **Best for**: Advanced theme generation
+- **Strengths**: Improved AI capabilities, innovative designs
+- **Use cases**: Modern applications, creative projects
+
+```bash
+shadcnai theme "futuristic AI interface" --model gemini-2.0-flash
+```
+
+### `gemini-2.5-flash-lite`
+
+- **Best for**: Quick, lightweight theme generation
+- **Strengths**: Fast performance, efficient processing
+- **Use cases**: Rapid prototyping, simple themes
+
+```bash
+shadcnai theme "simple blog theme" --model gemini-2.5-flash-lite
+```
+
+### `gemini-1.5-flash`
+
+- **Best for**: Reliable theme generation
+- **Strengths**: Proven performance, consistent results
+- **Use cases**: Production applications, professional websites
+
+```bash
+shadcnai theme "e-commerce platform with trustworthy design" --model gemini-1.5-flash
 ```
 
 ### `gemini-1.5-pro`
@@ -223,10 +243,19 @@ shadcnai theme "healthcare app with calming, trustworthy design" --model llama3.
 shadcnai theme "educational platform following WCAG AA guidelines" --model llama-4-scout-17b-16e-instruct
 ```
 
+### `llama-4-maverick-17b-128e-instruct`
+
+- **Best for**: Long-context understanding
+- **Strengths**: Extended context handling, comprehensive requirements
+- **Use cases**: Complex design briefs, multi-component themes
+
+```bash
+shadcnai theme "enterprise dashboard with multiple data views" --model llama-4-maverick-17b-128e-instruct
+```
+
 ### Other Cerebras Models
 
 - `llama3.1-8b` - Fast, lightweight generation
-- `llama-4-maverick-17b-128e-instruct` - Long-context understanding
 - `deepseek-r1-distill-llama-70b` - Reasoning-focused approach
 - `qwen-3-32b` - Alternative perspective on design
 - `qwen-3-235b-a22b` - High-capacity model for complex themes
@@ -257,10 +286,10 @@ Experiment with `grok-beta` or `llama-4-scout-17b-16e-instruct` for unconvention
 
 | Speed        | Models                                                                 |
 | ------------ | ---------------------------------------------------------------------- |
-| **Fastest**  | `gemini-1.5-flash`, `deepseek-chat`, `llama3.1-8b`                     |
-| **Fast**     | `claude-3-5-haiku-20241022`, `gpt-4.1-mini`, `mistral-small-latest`    |
-| **Balanced** | `llama3.1-70b`, `grok-beta`, `qwen-3-32b`                              |
-| **Thorough** | `claude-3-5-sonnet-20241022`, `gemini-1.5-pro`, `mistral-large-latest` |
+| **Fastest**  | `gemini-2.5-flash-lite`, `gemini-1.5-flash`, `deepseek-chat`, `llama3.1-8b`                     |
+| **Fast**     | `gemini-2.5-flash`, `claude-3-5-haiku-20241022`, `gpt-4.1-mini`, `mistral-small-latest`    |
+| **Balanced** | `gemini-2.0-flash`, `llama3.1-70b`, `grok-beta`, `qwen-3-32b`                              |
+| **Thorough** | `claude-3-5-sonnet-20241022`, `gemini-1.5-pro`, `mistral-large-latest`, `llama-4-scout-17b-16e-instruct` |
 
 ## Cost Considerations
 

@@ -48,8 +48,10 @@ npx shadcnai theme "minimalist design" --no-import
 
 ### Google AI (Default)
 
-- `gemini-1.5-flash` (**default**)
-- `gemini-2.0-flash-exp`
+- `gemini-2.5-flash` (**default**)
+- `gemini-2.0-flash`
+- `gemini-2.5-flash-lite`
+- `gemini-1.5-flash`
 - `gemini-1.5-pro`
 
 ### OpenAI
@@ -89,6 +91,11 @@ npx shadcnai theme "minimalist design" --no-import
 - `llama3.1-8b`
 - `llama3.1-70b`
 - `llama3.3-70b`
+- `llama-4-scout-17b-16e-instruct`
+- `llama-4-maverick-17b-128e-instruct`
+- `deepseek-r1-distill-llama-70b`
+- `qwen-3-32b`
+- `qwen-3-235b-a22b`
 
 want more models? - create a [github issue](https://github.com/vivek9patel/shadcnai/issues)
 
