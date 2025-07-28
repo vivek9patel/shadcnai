@@ -169,12 +169,21 @@ export function promptPackageManager(): Promise<PackageManager> {
  */
 export function executeCommand(command: string, args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    const process = spawn(command, args, {
+    // Set environment variables to automatically confirm package installations
+    const env: NodeJS.ProcessEnv = {
+      ...process.env,
+      npm_config_yes: "true",
+      npm_config_audit: "false",
+      npm_config_fund: "false",
+    };
+
+    const childProcess = spawn(command, args, {
       stdio: "inherit",
       shell: true,
+      env,
     });
 
-    process.on("close", (code) => {
+    childProcess.on("close", (code: number | null) => {
       if (code === 0) {
         resolve();
       } else {
@@ -182,7 +191,7 @@ export function executeCommand(command: string, args: string[]): Promise<void> {
       }
     });
 
-    process.on("error", (error) => {
+    childProcess.on("error", (error: Error) => {
       reject(error);
     });
   });
@@ -204,10 +213,22 @@ export async function importThemeWithShadcn(
     );
 
     const [baseCommand, ...baseArgs] = pm.command.split(" ");
-    const args = [...baseArgs, "shadcn@latest", "add", registryPath, "-y"];
+
+    // Add --yes flag to auto-confirm package installation prompts
+    const npxArgs = baseCommand === "npx" ? ["--yes"] : [];
+    const args = [
+      ...baseArgs,
+      ...npxArgs,
+      "shadcn@latest",
+      "add",
+      registryPath,
+      "-y",
+    ];
 
     CLIAnimations.updateSpinner(
-      `Running: ${pm.command} shadcn@latest add ${registryPath}`
+      `Running: ${pm.command} ${
+        npxArgs.length > 0 ? "--yes " : ""
+      }shadcn@latest add ${registryPath}`
     );
 
     await executeCommand(baseCommand, args);
@@ -226,13 +247,27 @@ export async function importThemeWithShadcn(
     }
   } catch (error) {
     CLIAnimations.failSpinner("Import failed");
-    CLIAnimations.showError(
-      error instanceof Error ? error.message : "Unknown error occurred"
-    );
+
+    // Check if it's a cancellation error (user cancelled npx prompt)
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    if (
+      errorMessage.includes("canceled") ||
+      errorMessage.includes("cancelled")
+    ) {
+      CLIAnimations.showWarning("Installation was cancelled by user");
+      CLIAnimations.showInfo(
+        "This usually happens when npx prompts to install the shadcn package"
+      );
+    } else {
+      CLIAnimations.showError(errorMessage);
+    }
+
     CLIAnimations.showHeader("Manual import options:", "💡", "yellow");
-    console.log(`• Run: npx shadcn@latest add ${registryPath}`);
+    console.log(`• Run: npx --yes shadcn@latest add ${registryPath}`);
     console.log(`• Or: yarn dlx shadcn@latest add ${registryPath}`);
     console.log(`• Or: pnpm dlx shadcn@latest add ${registryPath}`);
+    console.log(`• Or: bun x shadcn@latest add ${registryPath}`);
     throw error;
   }
 }

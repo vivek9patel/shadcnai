@@ -47,7 +47,7 @@ export class FileService {
         CLIAnimations.showSuccess("Files saved successfully!", "💾");
         CLIAnimations.showInfo(`Registry JSON: ${registryPath}`, "📄");
         CLIAnimations.showHeader("Next steps:", "💡", "yellow");
-        console.log(`• Run: npx shadcn@latest add ${registryPath}`);
+        console.log(`• Run: npx --yes shadcn@latest add ${registryPath}`);
         console.log("• Or remove --no-import flag for automatic import");
 
         return { success: true, filePath: registryPath };
@@ -106,7 +106,7 @@ export class FileService {
   static displayTheme(registryTheme: any): void {
     CLIAnimations.showHeader("Next steps:", "💡", "yellow");
     console.log("• Save the registry JSON below to a file");
-    console.log("• Run: npx shadcn@latest add ./your-theme.json");
+    console.log("• Run: npx --yes shadcn@latest add ./your-theme.json");
     console.log("• Or remove --no-save --no-import flags for automatic import");
 
     CLIAnimations.showHeader("Registry JSON:", "📄", "blue");
@@ -119,7 +119,7 @@ export class FileService {
   static displayManualImportInstructions(registryTheme: any): void {
     CLIAnimations.showHeader("Manual import instructions:", "📋", "yellow");
     console.log("• Save the registry JSON below to a file");
-    console.log("• Run: npx shadcn@latest add ./your-theme.json");
+    console.log("• Run: npx --yes shadcn@latest add ./your-theme.json");
 
     CLIAnimations.showHeader("Registry JSON:", "📄", "blue");
     console.log(JSON.stringify(registryTheme, null, 2));

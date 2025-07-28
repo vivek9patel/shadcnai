@@ -6,7 +6,9 @@ export const AI_PROVIDERS = {
     name: "Google AI",
     envKey: "GOOGLE_GENERATIVE_AI_API_KEY",
     models: [
-      "gemini-2.0-flash-exp",
+      "gemini-2.0-flash",
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite",
       "gemini-1.5-flash",
       "gemini-1.5-pro",
     ] as const,
@@ -72,7 +74,7 @@ export const SUPPORTED_MODELS = Object.values(AI_PROVIDERS).flatMap(
 /**
  * Default model for theme generation
  */
-export const DEFAULT_MODEL = "gemini-1.5-flash" as const;
+export const DEFAULT_MODEL = "gemini-2.5-flash" as const;
 
 /**
  * Type for supported models
