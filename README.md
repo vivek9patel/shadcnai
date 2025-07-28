@@ -2,7 +2,11 @@
 
 ![Beta](https://img.shields.io/badge/status-beta-orange?style=flat-square)
 
-A CLI tool for generating beautiful shadcn/ui themes using using natural language descriptions.
+<div align="center">
+  <img src="app/public/shadcnai-cool.png" alt="shadcnai - AI-Powered Theme Generator"  height="200" />
+ <div> A CLI tool for generating beautiful shadcn/ui themes using natural language descriptions.</div>
+</div>
+
 
 ## Quick Start
 
