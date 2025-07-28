@@ -1,6 +1,6 @@
 {
   "name": "shadcnai",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "CLI tool for generating beautiful shadcn/ui themes using AI",
   "keywords": [
     "shadcn",
