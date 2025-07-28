@@ -8,7 +8,8 @@
     "cli",
     "themes",
     "ai",
-    "typescript"
+    "typescript",
+    "ai-sdk"
   ],
   "bin": {
     "shadcnai": "dist/cli.js"
