@@ -1,0 +1,277 @@
+---
+title: AI Models
+description: Choose from 20+ AI models across 7 different providers for theme generation
+---
+
+# AI Models
+
+shadcnai supports 20+ AI models across 7 different providers, each with unique strengths for theme generation.
+
+## Provider Overview
+
+| Provider      | Models   | Best For                            | API Key Required               |
+| ------------- | -------- | ----------------------------------- | ------------------------------ |
+| **Google AI** | 3 models | Balanced, accessible themes         | `GOOGLE_GENERATIVE_AI_API_KEY` |
+| **OpenAI**    | 4 models | Creative, innovative designs        | `OPENAI_API_KEY`               |
+| **Anthropic** | 5 models | Sophisticated, context-aware themes | `ANTHROPIC_API_KEY`            |
+| **xAI**       | 3 models | Unique, experimental approaches     | `XAI_API_KEY`                  |
+| **DeepSeek**  | 2 models | Fast, efficient generation          | `DEEPSEEK_API_KEY`             |
+| **Mistral**   | 3 models | European design sensibilities       | `MISTRAL_API_KEY`              |
+| **Cerebras**  | 8 models | Rapid iteration, varied styles      | `CEREBRAS_API_KEY`             |
+
+## Google AI Models
+
+### `gemini-2.0-flash-exp` (Experimental)
+
+- **Best for**: Cutting-edge theme generation
+- **Strengths**: Latest AI capabilities, experimental features
+- **Use cases**: Innovative designs, testing new approaches
+
+```bash
+shadcnai theme "futuristic AI interface" --model gemini-2.0-flash-exp
+```
+
+### `gemini-1.5-flash` (Default ⭐)
+
+- **Best for**: General-purpose theme generation
+- **Strengths**: Fast, reliable, great color harmony
+- **Use cases**: Business apps, professional websites
+
+```bash
+shadcnai theme "corporate dashboard with professional blue tones"
+```
+
+### `gemini-1.5-pro`
+
+- **Best for**: Complex, detailed theme requirements
+- **Strengths**: Deep understanding, nuanced color relationships
+- **Use cases**: Sophisticated applications, detailed brand guidelines
+
+```bash
+shadcnai theme "luxury hotel booking platform with gold accents" --model gemini-1.5-pro
+```
+
+## OpenAI Models
+
+### `gpt-4.1`
+
+- **Best for**: Creative and artistic themes
+- **Strengths**: Innovative combinations, artistic flair
+- **Use cases**: Creative portfolios, artistic websites
+
+```bash
+shadcnai theme "modern art gallery with bold geometric colors" --model gpt-4.1
+```
+
+### `gpt-4.1-mini`
+
+- **Best for**: Fast creative generation
+- **Strengths**: Quick results, good creativity
+- **Use cases**: Rapid prototyping, initial concepts
+
+```bash
+shadcnai theme "startup landing page with energetic colors" --model gpt-4.1-mini
+```
+
+### `gpt-4o` & `gpt-4o-mini`
+
+- **Best for**: Optimized performance
+- **Strengths**: Balanced speed and quality
+- **Use cases**: Production themes, reliable results
+
+```bash
+shadcnai theme "e-commerce platform with trustworthy design" --model gpt-4o
+```
+
+## Anthropic Models
+
+### `claude-3-5-sonnet-20241022` (Recommended)
+
+- **Best for**: Sophisticated, context-aware themes
+- **Strengths**: Excellent understanding of design principles
+- **Use cases**: Professional applications, complex requirements
+
+```bash
+shadcnai theme "fintech app following accessibility guidelines" --model claude-3-5-sonnet-20241022
+```
+
+### `claude-3-5-haiku-20241022`
+
+- **Best for**: Quick, elegant themes
+- **Strengths**: Fast generation, clean aesthetics
+- **Use cases**: Minimalist designs, rapid development
+
+```bash
+shadcnai theme "minimalist note-taking app" --model claude-3-5-haiku-20241022
+```
+
+### `claude-3-sonnet-20240229`
+
+- **Best for**: Balanced creativity and practicality
+- **Strengths**: Thoughtful color choices, good reasoning
+- **Use cases**: Balanced designs, general applications
+
+```bash
+shadcnai theme "productivity app with calming colors" --model claude-3-sonnet-20240229
+```
+
+## xAI Models
+
+### `grok-beta`
+
+- **Best for**: Experimental, unique themes
+- **Strengths**: Unconventional approaches, surprising combinations
+- **Use cases**: Creative projects, standing out from competition
+
+```bash
+shadcnai theme "gaming platform with electric energy" --model grok-beta
+```
+
+### `grok-2-1212` & `grok-2-vision-1212`
+
+- **Best for**: Advanced experimental designs
+- **Strengths**: Latest xAI capabilities, innovative thinking
+- **Use cases**: Cutting-edge applications, experimental UI
+
+```bash
+shadcnai theme "AI-powered music creation interface" --model grok-2-1212
+```
+
+## DeepSeek Models
+
+### `deepseek-chat`
+
+- **Best for**: Efficient, practical themes
+- **Strengths**: Good balance of quality and speed
+- **Use cases**: Standard applications, quick iterations
+
+```bash
+shadcnai theme "social media dashboard" --model deepseek-chat
+```
+
+### `deepseek-reasoner`
+
+- **Best for**: Logical, well-reasoned color choices
+- **Strengths**: Analytical approach to design
+- **Use cases**: Data-heavy applications, analytical tools
+
+```bash
+shadcnai theme "analytics dashboard with clear data visualization" --model deepseek-reasoner
+```
+
+## Mistral Models
+
+### `mistral-large-latest`
+
+- **Best for**: Sophisticated European design aesthetic
+- **Strengths**: Refined color palettes, elegant combinations
+- **Use cases**: Luxury brands, European markets
+
+```bash
+shadcnai theme "French luxury fashion e-commerce" --model mistral-large-latest
+```
+
+### `mistral-small-latest`
+
+- **Best for**: Quick, efficient theme generation
+- **Strengths**: Fast results, good quality
+- **Use cases**: Rapid prototyping, simple applications
+
+```bash
+shadcnai theme "cafe website with warm, inviting colors" --model mistral-small-latest
+```
+
+### `pixtral-large-latest`
+
+- **Best for**: Visual-first design approaches
+- **Strengths**: Understanding visual hierarchy, image-aware themes
+- **Use cases**: Photography portfolios, visual-heavy sites
+
+```bash
+shadcnai theme "photography portfolio with gallery-inspired colors" --model pixtral-large-latest
+```
+
+## Cerebras Models
+
+### `llama3.1-70b` (Recommended)
+
+- **Best for**: High-quality, varied themes
+- **Strengths**: Excellent variety, good understanding
+- **Use cases**: General applications, experimental designs
+
+```bash
+shadcnai theme "modern SaaS application" --model llama3.1-70b
+```
+
+### `llama3.3-70b`
+
+- **Best for**: Latest Llama capabilities
+- **Strengths**: Improved reasoning, better color harmony
+- **Use cases**: Advanced applications, nuanced requirements
+
+```bash
+shadcnai theme "healthcare app with calming, trustworthy design" --model llama3.3-70b
+```
+
+### `llama-4-scout-17b-16e-instruct`
+
+- **Best for**: Cutting-edge Llama 4 features
+- **Strengths**: Advanced instruction following
+- **Use cases**: Complex requirements, detailed specifications
+
+```bash
+shadcnai theme "educational platform following WCAG AA guidelines" --model llama-4-scout-17b-16e-instruct
+```
+
+### Other Cerebras Models
+
+- `llama3.1-8b` - Fast, lightweight generation
+- `llama-4-maverick-17b-128e-instruct` - Long-context understanding
+- `deepseek-r1-distill-llama-70b` - Reasoning-focused approach
+- `qwen-3-32b` - Alternative perspective on design
+- `qwen-3-235b-a22b` - High-capacity model for complex themes
+
+## Model Selection Guide
+
+### For Beginners
+
+Start with the default `gemini-1.5-flash` - it's fast, reliable, and produces great results for most use cases.
+
+### For Professionals
+
+Use `claude-3-5-sonnet-20241022` for sophisticated applications requiring deep understanding of design principles.
+
+### For Creatives
+
+Try `gpt-4.1` for innovative, artistic themes that stand out from conventional designs.
+
+### For Rapid Prototyping
+
+Use `llama3.1-70b` or `deepseek-chat` for quick iterations and experimentation.
+
+### For Unique Designs
+
+Experiment with `grok-beta` or `llama-4-scout-17b-16e-instruct` for unconventional approaches.
+
+## Performance Comparison
+
+| Speed        | Models                                                                 |
+| ------------ | ---------------------------------------------------------------------- |
+| **Fastest**  | `gemini-1.5-flash`, `deepseek-chat`, `llama3.1-8b`                     |
+| **Fast**     | `claude-3-5-haiku-20241022`, `gpt-4.1-mini`, `mistral-small-latest`    |
+| **Balanced** | `llama3.1-70b`, `grok-beta`, `qwen-3-32b`                              |
+| **Thorough** | `claude-3-5-sonnet-20241022`, `gemini-1.5-pro`, `mistral-large-latest` |
+
+## Cost Considerations
+
+While shadcnai doesn't charge for usage, different AI providers have varying API costs:
+
+- **Most Cost-Effective**: Google AI, DeepSeek
+- **Balanced**: Mistral, Cerebras
+- **Premium**: OpenAI, Anthropic, xAI
+
+Choose models based on your budget and quality requirements.
+
+## Next Steps
+
+Ready to experiment with different models? Check out our [Examples](/docs/examples) to see how different models handle the same prompts, or dive into the [API Reference](/docs/api) for programmatic usage.

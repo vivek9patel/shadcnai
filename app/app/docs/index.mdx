@@ -1,0 +1,42 @@
+---
+title: Getting Started
+description: A powerful CLI tool for generating beautiful shadcn/ui themes using AI
+---
+
+<div className="flex items-center justify-center gap-6 mb-8">
+  <img
+    src="/shadcnai-cool.png"
+    alt="shadcnai logo"
+    width="120"
+    height="120"
+    className="rounded-lg"
+  />
+  <div>
+    <h1 className="text-4xl font-bold mb-2">shadcnai</h1>
+    <p className="text-xl text-muted-foreground">
+      AI-Powered Theme Generator CLI
+    </p>
+  </div>
+</div>
+
+A powerful CLI tool for generating beautiful shadcn/ui themes using AI. Create stunning, cohesive design systems with just a simple description.
+
+## Quick Start
+
+```bash
+# Set up your API key (for default Gemini model)
+export GOOGLE_GENERATIVE_AI_API_KEY=your-key-here
+
+# Generate your first theme
+npx shadcnai theme "neo brutalism theme with pink sunset vibes"
+```
+
+## Key Features
+
+- **20+ AI Models** - Google AI, OpenAI, Anthropic, xAI, DeepSeek, Mistral, Cerebras
+- **Auto-Import** - Seamlessly integrates with shadcn/ui CLI
+- **Flexible Output** - Save to files or display in terminal
+- **Temperature Control** - Adjust creativity vs consistency
+- **Package Manager Support** - Works with npm, yarn, pnpm, bun
+
+Ready to create beautiful themes? Let's get started with [installation](/docs/installation).

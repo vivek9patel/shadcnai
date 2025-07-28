@@ -1,0 +1,265 @@
+---
+title: Usage
+description: Learn how to use shadcnai effectively to create beautiful themes for your projects
+---
+
+# Usage
+
+Learn how to use shadcnai effectively to create beautiful themes for your projects.
+
+## Basic Usage
+
+The simplest way to generate a theme:
+
+```bash
+shadcnai theme "dark theme with purple accents"
+```
+
+This command will:
+
+1. Generate a complete theme using AI
+2. Save theme files to your current directory
+3. Automatically import the theme using shadcn CLI
+
+## Writing Effective Descriptions
+
+The quality of your theme depends heavily on your description. Here are tips for writing effective prompts:
+
+### Be Specific About Colors
+
+```bash
+# ✅ Good: Specific color references
+shadcnai theme "deep navy blue with gold accents and cream backgrounds"
+
+# ❌ Vague: Too general
+shadcnai theme "nice colors"
+```
+
+### Include Mood and Context
+
+```bash
+# ✅ Good: Context and emotion
+shadcnai theme "professional banking app with trustworthy blue tones"
+
+# ✅ Good: Specific use case
+shadcnai theme "playful children's app with bright rainbow colors"
+
+# ✅ Good: Design inspiration
+shadcnai theme "minimalist Scandinavian design with muted earth tones"
+```
+
+### Specify Light/Dark Preferences
+
+```bash
+# ✅ Good: Clear mode preference
+shadcnai theme "dark mode gaming interface with neon green highlights"
+
+# ✅ Good: Balanced approach
+shadcnai theme "versatile theme that works well in both light and dark modes"
+```
+
+## Common Workflows
+
+### 1. Rapid Prototyping
+
+Generate multiple theme variations quickly:
+
+```bash
+# Generate without auto-import for comparison
+shadcnai theme "startup landing page - energetic and modern" --no-import
+shadcnai theme "startup landing page - professional and trustworthy" --no-import
+shadcnai theme "startup landing page - creative and bold" --no-import
+```
+
+### 2. Brand-Specific Themes
+
+Create themes that match existing brand guidelines:
+
+```bash
+# Corporate branding
+shadcnai theme "corporate theme matching Microsoft's blue (#0078d4) with clean whites and subtle grays"
+
+# Startup branding
+shadcnai theme "fintech app with Stripe-inspired purple (#635bff) and modern gradients"
+```
+
+### 3. Iterative Refinement
+
+Start broad, then refine:
+
+```bash
+# First iteration
+shadcnai theme "e-commerce fashion site" --no-import --output ./v1
+
+# Refined based on results
+shadcnai theme "luxury fashion e-commerce with rose gold accents and sophisticated blacks" --no-import --output ./v2
+
+# Final version
+shadcnai theme "high-end fashion boutique with champagne gold, deep charcoal, and warm whites" --output ./final
+```
+
+### 4. A/B Testing Themes
+
+Generate variations for testing:
+
+```bash
+# Version A: Warmer tones
+shadcnai theme "SaaS dashboard with warm blues and friendly orange accents" --output ./themes/variant-a
+
+# Version B: Cooler tones
+shadcnai theme "SaaS dashboard with cool grays and professional blue highlights" --output ./themes/variant-b
+```
+
+## Understanding the Output
+
+shadcnai generates comprehensive theme configurations:
+
+### Color Variables
+
+Every theme includes 30+ CSS variables for both light and dark modes:
+
+```css
+/* Light mode */
+--background: 0 0% 100%;
+--foreground: 224 71.4% 4.1%;
+--primary: 262.1 83.3% 57.8%;
+--primary-foreground: 210 20% 98%;
+
+/* Dark mode */
+--background: 224 71.4% 4.1%;
+--foreground: 210 20% 98%;
+--primary: 263.4 70% 50.4%;
+--primary-foreground: 210 20% 98%;
+```
+
+### Shadow System
+
+8 levels of shadows for depth and hierarchy:
+
+```css
+--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+--shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+```
+
+### Generated Files
+
+- `theme.json` - Complete shadcn/ui theme configuration
+- `theme.css` - CSS variables ready for use
+- `README.md` - Theme documentation and usage instructions
+
+## Model-Specific Tips
+
+Different AI models have unique strengths:
+
+### Google AI (Gemini)
+
+- **Best for**: Balanced, practical themes
+- **Strength**: Excellent color harmony and accessibility
+- **Tip**: Great for business and professional applications
+
+```bash
+shadcnai theme "enterprise software with accessible colors" --model gemini-1.5-flash
+```
+
+### OpenAI (GPT-4.1)
+
+- **Best for**: Creative and artistic themes
+- **Strength**: Innovative color combinations
+- **Tip**: Experiment with unusual design concepts
+
+```bash
+shadcnai theme "cyberpunk aesthetic with neon highlights" --model gpt-4.1
+```
+
+### Anthropic (Claude)
+
+- **Best for**: Sophisticated, nuanced themes
+- **Strength**: Understanding context and user intent
+- **Tip**: Use detailed descriptions for best results
+
+```bash
+shadcnai theme "luxury travel app inspired by five-star hotels" --model claude-3-5-sonnet-20241022
+```
+
+### Cerebras (Llama)
+
+- **Best for**: Fast iteration and experimentation
+- **Strength**: Quick generation with good variety
+- **Tip**: Perfect for rapid prototyping
+
+```bash
+shadcnai theme "social media app for Gen Z" --model llama3.1-70b
+```
+
+## Temperature Guidelines
+
+Adjust creativity based on your needs:
+
+### Conservative (0.0-0.4)
+
+```bash
+# Professional, safe color choices
+shadcnai theme "banking application" --temperature 0.3
+```
+
+### Balanced (0.5-0.8)
+
+```bash
+# Good mix of creativity and usability
+shadcnai theme "productivity app" --temperature 0.7
+```
+
+### Creative (0.9-2.0)
+
+```bash
+# Experimental, artistic themes
+shadcnai theme "music festival website" --temperature 1.2
+```
+
+## Troubleshooting
+
+### Theme Not Importing
+
+```bash
+# Manual import if auto-import fails
+cd your-project
+npx shadcn@latest add ./path/to/theme.json
+```
+
+### API Key Issues
+
+```bash
+# Verify environment variables
+echo $GOOGLE_GENERATIVE_AI_API_KEY
+
+# Test with different model
+shadcnai theme "test" --model gpt-4.1
+```
+
+### Unsatisfactory Results
+
+```bash
+# Try different temperature
+shadcnai theme "same description" --temperature 0.9
+
+# Use different model
+shadcnai theme "same description" --model claude-3-5-sonnet-20241022
+
+# Refine description
+shadcnai theme "more specific description with exact colors and mood"
+```
+
+## Best Practices
+
+1. **Start Simple**: Begin with basic descriptions, then add details
+2. **Use References**: Mention specific brands, designs, or color palettes
+3. **Consider Context**: Include the type of application or website
+4. **Experiment**: Try different models and temperatures
+5. **Iterate**: Use generated themes as starting points for refinement
+6. **Test Both Modes**: Ensure themes work well in light and dark modes
+
+## Next Steps
+
+Ready to see shadcnai in action? Check out our [Examples](/docs/examples) for inspiration, or dive into the [Models](/docs/models) guide to understand which AI model works best for your needs.

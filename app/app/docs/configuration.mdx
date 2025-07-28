@@ -1,0 +1,214 @@
+---
+title: Configuration
+description: Extensive configuration options to customize theme generation to your exact needs
+---
+
+# Configuration
+
+shadcnai offers extensive configuration options to customize theme generation to your exact needs.
+
+## Command Structure
+
+```bash
+shadcnai theme "<description>" [options]
+```
+
+## Core Options
+
+### Model Selection (`--model`, `-m`)
+
+Choose from 20+ AI models across 7 providers:
+
+```bash
+# Default (Google AI)
+shadcnai theme "dark blue theme"
+
+# OpenAI GPT-4.1
+shadcnai theme "ocean sunset colors" --model gpt-4.1
+
+# Anthropic Claude
+shadcnai theme "minimalist design" --model claude-3-5-sonnet-20241022
+
+# Cerebras Llama
+shadcnai theme "vibrant startup theme" --model llama3.1-70b
+```
+
+**Available Models:**
+
+| Provider      | Models                                                                                |
+| ------------- | ------------------------------------------------------------------------------------- |
+| **Google AI** | `gemini-2.0-flash-exp`, `gemini-1.5-flash`, `gemini-1.5-pro`                          |
+| **OpenAI**    | `gpt-4.1`, `gpt-4.1-mini`, `gpt-4o`, `gpt-4o-mini`                                    |
+| **Anthropic** | `claude-3-5-sonnet-20241022`, `claude-3-5-haiku-20241022`, `claude-3-sonnet-20240229` |
+| **xAI**       | `grok-beta`, `grok-2-1212`, `grok-2-vision-1212`                                      |
+| **DeepSeek**  | `deepseek-chat`, `deepseek-reasoner`                                                  |
+| **Mistral**   | `mistral-large-latest`, `mistral-small-latest`, `pixtral-large-latest`                |
+| **Cerebras**  | `llama3.1-8b`, `llama3.1-70b`, `llama3.3-70b`, `llama-4-scout-17b-16e-instruct`       |
+
+### Temperature Control (`--temperature`, `-t`)
+
+Control the creativity vs consistency of AI generation:
+
+```bash
+# Conservative/consistent (0.0-0.5)
+shadcnai theme "professional theme" --temperature 0.3
+
+# Balanced (default: 0.7)
+shadcnai theme "modern app theme"
+
+# Creative/experimental (0.8-2.0)
+shadcnai theme "artistic portfolio" --temperature 1.2
+```
+
+**Temperature Guide:**
+
+- **0.0-0.4**: Very consistent, conservative color choices
+- **0.5-0.7**: Balanced creativity and consistency (recommended)
+- **0.8-1.2**: More creative and unique combinations
+- **1.3-2.0**: Highly experimental, unexpected results
+
+## File Management Options
+
+### Save Control (`--save`, `--no-save`)
+
+Control whether generated themes are saved to disk:
+
+```bash
+# Save theme files (default)
+shadcnai theme "dark theme"
+
+# Display only, don't save
+shadcnai theme "preview theme" --no-save
+```
+
+### Auto-Import (`--import`, `--no-import`)
+
+Automatically import themes using shadcn CLI:
+
+```bash
+# Auto-import after generation (default)
+shadcnai theme "new theme"
+
+# Generate without importing
+shadcnai theme "test theme" --no-import
+```
+
+### Output Directory (`--output`, `-o`)
+
+Specify where to save theme files:
+
+```bash
+# Save to specific directory
+shadcnai theme "custom theme" --output ./themes
+
+# Save to current directory (default)
+shadcnai theme "local theme"
+```
+
+### Package Manager (`--packageManager`, `--pm`)
+
+Choose package manager for auto-import:
+
+```bash
+# npm (default)
+shadcnai theme "npm theme"
+
+# Yarn
+shadcnai theme "yarn theme" --pm yarn
+
+# pnpm
+shadcnai theme "pnpm theme" --pm pnpm
+
+# Bun
+shadcnai theme "bun theme" --pm bun
+```
+
+## Advanced Configuration
+
+### Environment Variables
+
+Set default behavior through environment variables:
+
+```bash
+# Default model
+export SHADCNAI_DEFAULT_MODEL=gpt-4.1
+
+# Default temperature
+export SHADCNAI_DEFAULT_TEMPERATURE=0.8
+
+# Default package manager
+export SHADCNAI_DEFAULT_PM=pnpm
+```
+
+### Batch Generation
+
+Generate multiple themes efficiently:
+
+```bash
+# Save multiple themes without auto-import
+shadcnai theme "corporate blue" --no-import --output ./themes/corporate
+shadcnai theme "startup green" --no-import --output ./themes/startup
+shadcnai theme "artistic purple" --no-import --output ./themes/artistic
+```
+
+### Model Comparison
+
+Compare results from different models:
+
+```bash
+# Same description, different models
+shadcnai theme "sunset beach theme" --model gemini-1.5-flash --output ./comparison/gemini
+shadcnai theme "sunset beach theme" --model gpt-4.1 --output ./comparison/openai
+shadcnai theme "sunset beach theme" --model claude-3-5-sonnet-20241022 --output ./comparison/anthropic
+```
+
+## Configuration Examples
+
+### Development Workflow
+
+```bash
+# Quick preview without saving
+shadcnai theme "test colors" --no-save
+
+# Generate and save for review
+shadcnai theme "main theme" --no-import --output ./review
+
+# Final import after approval
+cd ./review && npx shadcn@latest add ./theme.json
+```
+
+### Production Themes
+
+```bash
+# High-quality, consistent theme
+shadcnai theme "professional banking app" \\
+  --model claude-3-5-sonnet-20241022 \\
+  --temperature 0.4 \\
+  --output ./production-themes
+```
+
+### Creative Exploration
+
+```bash
+# Experimental artistic themes
+shadcnai theme "abstract art gallery" \\
+  --model gpt-4.1 \\
+  --temperature 1.5 \\
+  --no-import \\
+  --output ./experiments
+```
+
+## Default Behavior
+
+When no options are specified, shadcnai uses these defaults:
+
+- **Model**: `gemini-1.5-flash`
+- **Temperature**: `0.7`
+- **Save**: `true`
+- **Auto-import**: `true`
+- **Package Manager**: `npm`
+- **Output**: Current directory
+
+## Next Steps
+
+Now that you understand configuration options, learn how to use shadcnai effectively in the [Usage](/docs/usage) guide, or explore specific [Models](/docs/models) to find the best fit for your needs.

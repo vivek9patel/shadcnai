@@ -1,0 +1,181 @@
+---
+title: Installation
+description: Get started with shadcnai in just a few simple steps
+---
+
+# Installation
+
+Get started with shadcnai in just a few simple steps.
+
+## Requirements
+
+- **Node.js** ≥ 18.0.0
+- **npm** ≥ 9.0.0 (or equivalent with yarn, pnpm, bun)
+- A shadcn/ui project (optional for theme generation, required for auto-import)
+
+## Global Installation
+
+Install shadcnai globally to use it from anywhere:
+
+```bash
+npm install -g shadcnai
+```
+
+Or with other package managers:
+
+```bash
+# Yarn
+yarn global add shadcnai
+
+# pnpm
+pnpm add -g shadcnai
+
+# Bun
+bun add -g shadcnai
+```
+
+## Local Installation
+
+You can also run shadcnai without installing it globally:
+
+```bash
+# Using npx (recommended)
+npx shadcnai theme "your theme description"
+
+# Or install locally
+npm install shadcnai
+npx shadcnai theme "your theme description"
+```
+
+## Verification
+
+Verify your installation by checking the version:
+
+```bash
+shadcnai --version
+```
+
+Or view the help:
+
+```bash
+shadcnai --help
+```
+
+You should see output similar to:
+
+```
+shadcnai <command> [options]
+
+Commands:
+  shadcnai theme <description>  Generate a shadcn/ui theme based on description
+
+Options:
+  --help, -h     Show help                                            [boolean]
+  --version, -v  Show version number                                  [boolean]
+```
+
+## Setting Up API Keys
+
+shadcnai requires API keys from AI providers. The default model uses Google AI, but you can configure multiple providers.
+
+### Quick Setup (Default Model)
+
+For the default Gemini 2.5 Flash model:
+
+```bash
+export GOOGLE_GENERATIVE_AI_API_KEY=your-google-ai-key
+```
+
+### Complete Setup (All Models)
+
+To use all available models, set up the respective API keys:
+
+```bash
+# Google AI (default)
+export GOOGLE_GENERATIVE_AI_API_KEY=your-google-ai-key
+
+# OpenAI
+export OPENAI_API_KEY=your-openai-key
+
+# Anthropic
+export ANTHROPIC_API_KEY=your-anthropic-key
+
+# xAI
+export XAI_API_KEY=your-xai-key
+
+# DeepSeek
+export DEEPSEEK_API_KEY=your-deepseek-key
+
+# Mistral
+export MISTRAL_API_KEY=your-mistral-key
+
+# Cerebras
+export CEREBRAS_API_KEY=your-cerebras-key
+```
+
+### Persistent Environment Variables
+
+To make environment variables persistent, add them to your shell profile:
+
+**Bash/Zsh (~/.bashrc or ~/.zshrc):**
+
+```bash
+echo 'export GOOGLE_GENERATIVE_AI_API_KEY=your-key-here' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Fish (~/.config/fish/config.fish):**
+
+```fish
+set -Ux GOOGLE_GENERATIVE_AI_API_KEY your-key-here
+```
+
+## Getting API Keys
+
+Here's how to obtain API keys for each provider:
+
+### Google AI
+
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Click "Create API Key"
+3. Copy your key
+
+### OpenAI
+
+1. Go to [OpenAI API Keys](https://platform.openai.com/api-keys)
+2. Click "Create new secret key"
+3. Copy your key
+
+### Anthropic
+
+1. Visit [Anthropic Console](https://console.anthropic.com/)
+2. Go to "API Keys" section
+3. Generate a new key
+
+### xAI
+
+1. Go to [xAI Console](https://console.x.ai/)
+2. Navigate to API Keys
+3. Create a new key
+
+### DeepSeek
+
+1. Visit [DeepSeek Platform](https://platform.deepseek.com/)
+2. Access API Keys section
+3. Generate new key
+
+### Mistral
+
+1. Go to [Mistral Console](https://console.mistral.ai/)
+2. Find API Keys section
+3. Create new key
+
+### Cerebras
+
+1. Visit [Cerebras Inference](https://inference.cerebras.ai/)
+2. Access your dashboard
+3. Generate API key
+
+## Next Steps
+
+With shadcnai installed and configured, you're ready to start generating themes! Continue to [Configuration](/docs/configuration) to learn about customization options, or jump straight to [Usage](/docs/usage) to start creating themes.

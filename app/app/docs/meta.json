@@ -1,0 +1,13 @@
+{
+  "title": "shadcnai Documentation",
+  "pages": [
+    "index",
+    "installation",
+    "configuration", 
+    "usage",
+    "models",
+    "examples",
+    "api",
+    "development"
+  ]
+} 
