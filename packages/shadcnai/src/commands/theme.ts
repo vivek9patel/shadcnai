@@ -1,229 +1,13 @@
-import { generateObject } from "ai";
-import { ThemeGenerationLLMResponseSchema } from "../types/theme";
-import { THEME_GENERATION_PROMPT } from "../prompts/theme-generation";
-import { getModel } from "../lib/models";
+import { validateEnvironment } from "../lib/env";
+import { ThemeGeneratorService } from "../services/theme-generator";
+import { FileService } from "../lib/files";
 import {
   DEFAULT_MODEL,
   SUPPORTED_MODELS,
   AI_PROVIDERS,
-  getProviderForModel,
   isValidModel,
   type SupportedModel,
 } from "../constants/models";
-import {
-  findEnvFiles,
-  getEnvFromFiles,
-  promptUser,
-  setEnvironmentVariables,
-  transformToRegistryTheme,
-  importThemeWithShadcn,
-  PACKAGE_MANAGERS,
-  type PackageManager,
-} from "../lib/utils";
-import { writeFileSync, unlinkSync } from "fs";
-import { join } from "path";
-
-function getRequiredEnvVar(model: SupportedModel): {
-  key: string;
-  name: string;
-} {
-  const providerInfo = getProviderForModel(model);
-  if (providerInfo) {
-    return { key: providerInfo.envKey, name: providerInfo.name };
-  }
-
-  // Fallback to default model provider
-  const defaultProviderInfo = getProviderForModel(DEFAULT_MODEL);
-  return { key: defaultProviderInfo!.envKey, name: defaultProviderInfo!.name };
-}
-
-async function validateEnvironment(model: SupportedModel): Promise<boolean> {
-  const { key, name } = getRequiredEnvVar(model);
-
-  // First check for .env files and auto-load if available
-  const envFiles = findEnvFiles();
-  if (envFiles.length > 0) {
-    const allEnvVars = getEnvFromFiles(envFiles);
-    if (allEnvVars[key] && !process.env[key]) {
-      console.log(`🔄 Auto-loading ${key} from .env files...`);
-      setEnvironmentVariables(allEnvVars);
-    }
-  }
-
-  // Now check if the required variable is available
-  if (!process.env[key]) {
-    const isDefault = model === DEFAULT_MODEL;
-    console.error(`❌ Missing required environment variable: ${key}`);
-    console.error(
-      `${model}${
-        isDefault ? " (default model)" : ""
-      } uses ${name} provider, you need to set:`
-    );
-    console.error(`export ${key}=your-api-key-here`);
-
-    if (isDefault) {
-      console.error(
-        `\n💡 Tip: ${DEFAULT_MODEL} is the default model. You can also use:`
-      );
-      console.error(`  --model gpt-4.1 (requires OPENAI_API_KEY)`);
-      console.error(
-        `  --model claude-3-5-sonnet-20241022 (requires ANTHROPIC_API_KEY)`
-      );
-      console.error(`  --model grok-beta (requires XAI_API_KEY)`);
-      console.error(`  --model deepseek-chat (requires DEEPSEEK_API_KEY)`);
-    }
-
-    // Only show .env file options if we haven't already tried auto-loading
-    if (envFiles.length > 0) {
-      const allEnvVars = getEnvFromFiles(envFiles);
-      if (!allEnvVars[key]) {
-        console.error(`\n🔍 Found .env files: ${envFiles.join(", ")}`);
-        console.error(`⚠️  ${key} not found in any .env files`);
-      } else {
-        console.error(`\n🔍 Found .env files: ${envFiles.join(", ")}`);
-        console.error(`📝 Found ${key} in .env files, but auto-loading failed`);
-
-        const shouldLoad = await promptUser(
-          `\n🤔 Would you like to retry loading environment variables?`
-        );
-
-        if (shouldLoad) {
-          console.log(`\n🔄 Retrying environment variable loading...`);
-          setEnvironmentVariables(allEnvVars);
-          console.log(`✅ Environment variables loaded successfully!`);
-          return true; // Indicate success, continue execution
-        }
-      }
-    }
-
-    process.exit(1);
-  }
-
-  return true; // Environment variable already set or successfully loaded
-}
-
-async function generateTheme(
-  description: string,
-  model: SupportedModel = DEFAULT_MODEL,
-  options: {
-    outputDir?: string;
-    autoSave?: boolean;
-    autoImport?: boolean;
-    packageManager?: string;
-  } = {}
-) {
-  try {
-    console.log(`🎨 Generating theme for: "${description}"`);
-    console.log(
-      `🤖 Using model: ${model}${model === DEFAULT_MODEL ? " (default)" : ""}`
-    );
-    console.log("⏳ This may take a few moments...\n");
-
-    const selectedModel = getModel(model);
-
-    const result = await generateObject({
-      model: selectedModel,
-      schema: ThemeGenerationLLMResponseSchema,
-      prompt: THEME_GENERATION_PROMPT(description),
-      temperature: 0.7,
-    });
-
-    console.log("✅ Theme generated successfully!\n");
-
-    console.log("💭 Design Description:");
-    console.log(result.object.description);
-    console.log();
-
-    // Transform to registry format
-    const registryTheme = transformToRegistryTheme(result.object);
-
-    // Handle auto-import scenario
-    if (options.autoImport) {
-      const outputDir = options.outputDir || process.cwd();
-      const themeName = result.object.theme.name;
-      const registryPath = join(outputDir, `${themeName}-registry.json`);
-
-      try {
-        // Create temporary registry file
-        writeFileSync(registryPath, JSON.stringify(registryTheme, null, 2));
-
-        // Import theme using shadcn CLI
-        const selectedPackageManager = options.packageManager
-          ? PACKAGE_MANAGERS.find((pm) => pm.name === options.packageManager)
-          : PACKAGE_MANAGERS[0]; // Default to npm (first in array)
-
-        await importThemeWithShadcn(registryPath, selectedPackageManager);
-
-        console.log(
-          "\n🎉 Theme has been successfully imported into your project!"
-        );
-        console.log(
-          "💡 You can now use your custom theme in your shadcn/ui components."
-        );
-      } catch (error) {
-        console.error(
-          "❌ Error during theme import:",
-          error instanceof Error ? error.message : "Unknown error"
-        );
-
-        // Clean up the file if it still exists and import failed
-        try {
-          unlinkSync(registryPath);
-        } catch (cleanupError) {
-          // File might already be cleaned up or not exist
-        }
-
-        // Don't exit, fall through to manual instructions
-        console.log("\n📋 Manual import instructions:");
-        console.log("• Save the registry JSON below to a file");
-        console.log("• Run: npx shadcn@latest add ./your-theme.json");
-        console.log("\n📄 Registry JSON:");
-        console.log(JSON.stringify(registryTheme, null, 2));
-      }
-    }
-    // Handle traditional save scenario
-    else if (options.autoSave) {
-      const outputDir = options.outputDir || process.cwd();
-      const themeName = result.object.theme.name;
-      const registryPath = join(outputDir, `${themeName}-registry.json`);
-
-      try {
-        writeFileSync(registryPath, JSON.stringify(registryTheme, null, 2));
-
-        console.log("💾 Files saved:");
-        console.log(`• Registry JSON: ${registryPath}`);
-        console.log();
-
-        console.log("💡 Next steps:");
-        console.log(`• Run: npx shadcn@latest add ${registryPath}`);
-        console.log("• Or remove --no-import flag for automatic import");
-      } catch (error) {
-        console.error(
-          "❌ Error saving files:",
-          error instanceof Error ? error.message : "Unknown error"
-        );
-      }
-    }
-    // No save, just display
-    else {
-      console.log("💡 Next steps:");
-      console.log("• Save the registry JSON below to a file");
-      console.log("• Run: npx shadcn@latest add ./your-theme.json");
-      console.log(
-        "• Or remove --no-save --no-import flags for automatic import"
-      );
-
-      console.log("\n📄 Registry JSON:");
-      console.log(JSON.stringify(registryTheme, null, 2));
-    }
-  } catch (error) {
-    console.error(
-      "❌ Error generating theme:",
-      error instanceof Error ? error.message : "Unknown error"
-    );
-    process.exit(1);
-  }
-}
 
 export const themeCommand = {
   command: "theme <description>",
@@ -275,6 +59,13 @@ export const themeCommand = {
       describe: "Output directory for saved files (default: current directory)",
       type: "string" as const,
     },
+    temperature: {
+      alias: "t",
+      describe:
+        "Temperature for AI generation (0.0-2.0). Lower values = more focused, higher values = more creative (default: 0.7)",
+      type: "number" as const,
+      default: 0.7,
+    },
   },
   handler: async (argv: any) => {
     const {
@@ -284,8 +75,10 @@ export const themeCommand = {
       import: autoImport,
       packageManager,
       output,
+      temperature = 0.7,
     } = argv;
 
+    // Validate inputs
     if (!description.trim()) {
       console.error("❌ Error: Description cannot be empty");
       process.exit(1);
@@ -297,17 +90,58 @@ export const themeCommand = {
       process.exit(1);
     }
 
-    // Auto-import requires saving (at least temporarily), so force save if import is enabled
-    const effectiveSave = save || autoImport;
+    if (temperature < 0 || temperature > 2) {
+      console.error("❌ Error: Temperature must be between 0.0 and 2.0");
+      process.exit(1);
+    }
 
-    const envValidated = await validateEnvironment(model);
-    if (envValidated) {
-      await generateTheme(description, model, {
-        autoSave: effectiveSave,
-        autoImport: autoImport,
-        packageManager: packageManager,
-        outputDir: output,
+    try {
+      // Validate environment
+      await validateEnvironment(model);
+
+      // Generate theme
+      const result = await ThemeGeneratorService.generateTheme(description, {
+        model,
+        temperature,
       });
+
+      // Handle output based on user preferences
+      if (autoImport) {
+        // Auto-import requires saving (at least temporarily)
+        const saveResult = await FileService.saveAndImportTheme(
+          result.registryTheme,
+          result.themeName,
+          {
+            outputDir: output,
+            autoImport: true,
+            packageManager,
+          }
+        );
+
+        if (!saveResult.success) {
+          // If auto-import fails, show manual instructions
+          FileService.displayManualImportInstructions(result.registryTheme);
+        }
+      } else if (save) {
+        // Save without importing
+        await FileService.saveAndImportTheme(
+          result.registryTheme,
+          result.themeName,
+          {
+            outputDir: output,
+            autoImport: false,
+          }
+        );
+      } else {
+        // No save, just display
+        FileService.displayTheme(result.registryTheme);
+      }
+    } catch (error) {
+      console.error(
+        "❌ Error:",
+        error instanceof Error ? error.message : "Unknown error"
+      );
+      process.exit(1);
     }
   },
 };

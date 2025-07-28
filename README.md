@@ -30,6 +30,10 @@ npx shadcnai theme "clean matrix movie style" --model claude-3-5-sonnet-20241022
 export XAI_API_KEY=your-xai-key
 npx shadcnai theme "cyberpunk neon theme" --model grok-beta
 
+# Control creativity with temperature (0.0-2.0)
+npx shadcnai theme "elegant theme" --temperature 0.3  # More focused/consistent
+npx shadcnai theme "wild creative theme" --temperature 1.5  # More creative/diverse
+
 # Generate and save without auto-import
 npx shadcnai theme "minimalist design" --no-import
 
