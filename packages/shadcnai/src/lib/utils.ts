@@ -6,6 +6,7 @@ import { readFileSync, readdirSync, existsSync } from "fs";
 import { createInterface } from "readline";
 import { spawn } from "child_process";
 import { ThemeGenerationLLMResponse } from "../types/theme";
+import { CLIAnimations } from "./animations";
 
 /**
  * Check if a string is empty or contains only whitespace
@@ -195,41 +196,43 @@ export async function importThemeWithShadcn(
   packageManager?: PackageManager
 ): Promise<void> {
   try {
-    // Use provided package manager or default to npm
-    const pm = packageManager || PACKAGE_MANAGERS[0]; // Default to npm
+    const pm = packageManager || PACKAGE_MANAGERS[0];
 
-    console.log(`\n🚀 Importing theme using ${pm.name}...`);
+    const spinner = CLIAnimations.startSpinner(
+      `Importing theme using ${pm.name}...`,
+      "green"
+    );
 
-    // Build command arguments
     const [baseCommand, ...baseArgs] = pm.command.split(" ");
     const args = [...baseArgs, "shadcn@latest", "add", registryPath, "-y"];
 
-    console.log(`Running: ${pm.command} shadcn@latest add ${registryPath}`);
+    CLIAnimations.updateSpinner(
+      `Running: ${pm.command} shadcn@latest add ${registryPath}`
+    );
 
-    // Execute the shadcn add command
     await executeCommand(baseCommand, args);
 
-    console.log("✅ Theme imported successfully!");
+    CLIAnimations.succeedSpinner("Theme imported successfully!");
 
-    // Clean up the temporary file
+    await CLIAnimations.delay(300);
+
     try {
       const fs = await import("fs");
       fs.unlinkSync(registryPath);
     } catch (cleanupError) {
-      console.warn(
-        "⚠️  Warning: Could not clean up temporary file:",
-        registryPath
+      CLIAnimations.showWarning(
+        `Could not clean up temporary file: ${registryPath}`
       );
     }
   } catch (error) {
-    console.error(
-      "❌ Error importing theme:",
-      error instanceof Error ? error.message : "Unknown error"
+    CLIAnimations.failSpinner("Import failed");
+    CLIAnimations.showError(
+      error instanceof Error ? error.message : "Unknown error occurred"
     );
-    console.error("\n💡 Manual import options:");
-    console.error(`• Run: npx shadcn@latest add ${registryPath}`);
-    console.error(`• Or: yarn dlx shadcn@latest add ${registryPath}`);
-    console.error(`• Or: pnpm dlx shadcn@latest add ${registryPath}`);
+    CLIAnimations.showHeader("Manual import options:", "💡", "yellow");
+    console.log(`• Run: npx shadcn@latest add ${registryPath}`);
+    console.log(`• Or: yarn dlx shadcn@latest add ${registryPath}`);
+    console.log(`• Or: pnpm dlx shadcn@latest add ${registryPath}`);
     throw error;
   }
 }
@@ -242,7 +245,6 @@ export function transformToRegistryTheme(
 ): any {
   const { theme, description } = response;
 
-  // Helper function to convert camelCase shadow keys to kebab-case
   const transformShadows = (shadows: Record<string, string>) => {
     const transformed: Record<string, string> = {};
     Object.entries(shadows).forEach(([key, value]) => {
@@ -252,10 +254,8 @@ export function transformToRegistryTheme(
     return transformed;
   };
 
-  // Transform shadows to kebab-case format
   const shadowsKebab = transformShadows(theme.shadows);
 
-  // Create the complete light theme section
   const lightSection = {
     ...theme.colors.light,
     radius: theme.radius,
@@ -265,8 +265,6 @@ export function transformToRegistryTheme(
   const darkSection = {
     ...theme.colors.dark,
   };
-
-  // Create registry theme object
   const registryTheme = {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: theme.name,

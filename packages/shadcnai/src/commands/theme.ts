@@ -8,6 +8,7 @@ import {
   isValidModel,
   type SupportedModel,
 } from "../constants/models";
+import { CLIAnimations } from "../lib/animations";
 
 export const themeCommand = {
   command: "theme <description>",
@@ -80,18 +81,18 @@ export const themeCommand = {
 
     // Validate inputs
     if (!description.trim()) {
-      console.error("❌ Error: Description cannot be empty");
+      CLIAnimations.showError("Description cannot be empty");
       process.exit(1);
     }
 
     if (model && !isValidModel(model)) {
-      console.error(`❌ Error: Invalid model "${model}"`);
-      console.error(`Supported models: ${SUPPORTED_MODELS.join(", ")}`);
+      CLIAnimations.showError(`Invalid model "${model}"`);
+      console.log(`Supported models: ${SUPPORTED_MODELS.join(", ")}`);
       process.exit(1);
     }
 
     if (temperature < 0 || temperature > 2) {
-      console.error("❌ Error: Temperature must be between 0.0 and 2.0");
+      CLIAnimations.showError("Temperature must be between 0.0 and 2.0");
       process.exit(1);
     }
 
@@ -137,9 +138,8 @@ export const themeCommand = {
         FileService.displayTheme(result.registryTheme);
       }
     } catch (error) {
-      console.error(
-        "❌ Error:",
-        error instanceof Error ? error.message : "Unknown error"
+      CLIAnimations.showError(
+        error instanceof Error ? error.message : "Unknown error occurred"
       );
       process.exit(1);
     }

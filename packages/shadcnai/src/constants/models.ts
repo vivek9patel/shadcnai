@@ -49,7 +49,16 @@ export const AI_PROVIDERS = {
   cerebras: {
     name: "Cerebras",
     envKey: "CEREBRAS_API_KEY",
-    models: ["llama3.1-8b", "llama3.1-70b", "llama3.3-70b"] as const,
+    models: [
+      "llama3.1-8b",
+      "llama3.1-70b",
+      "llama3.3-70b",
+      "llama-4-scout-17b-16e-instruct",
+      "llama-4-maverick-17b-128e-instruct",
+      "deepseek-r1-distill-llama-70b",
+      "qwen-3-32b",
+      "qwen-3-235b-a22b",
+    ] as const,
   },
 } as const;
 

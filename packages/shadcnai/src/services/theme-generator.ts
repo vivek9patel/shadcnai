@@ -4,6 +4,7 @@ import { DEFAULT_MODEL, type SupportedModel } from "../constants/models";
 import { ThemeGenerationLLMResponseSchema } from "../types/theme";
 import { THEME_GENERATION_PROMPT } from "../prompts/theme-generation";
 import { transformToRegistryTheme } from "../lib/utils";
+import { CLIAnimations } from "../lib/animations";
 
 export interface ThemeGenerationOptions {
   model?: SupportedModel;
@@ -29,14 +30,20 @@ export class ThemeGeneratorService {
   ): Promise<ThemeGenerationResult> {
     const { model = DEFAULT_MODEL, temperature = 0.7 } = options;
 
-    console.log(`🎨 Generating theme for: "${description}"`);
-    console.log(
-      `🤖 Using model: ${model}${model === DEFAULT_MODEL ? " (default)" : ""}`
+    CLIAnimations.showHeader(
+      `Generating theme for: "${description}"`,
+      "🎨",
+      "magenta"
     );
-    console.log("⏳ This may take a few moments...\n");
+    CLIAnimations.showInfo(
+      `Using model: ${model}${model === DEFAULT_MODEL ? " (default)" : ""}`,
+      "🤖"
+    );
 
     try {
       const selectedModel = getModel(model);
+
+      CLIAnimations.showInfo("Generating theme colors and styles...", "⚡");
 
       const result = await generateObject({
         model: selectedModel,
@@ -45,13 +52,11 @@ export class ThemeGeneratorService {
         temperature,
       });
 
-      console.log("✅ Theme generated successfully!\n");
+      CLIAnimations.showSuccess("Theme generated successfully!", "✅");
 
-      console.log("💭 Design Description:");
-      console.log(result.object.description);
-      console.log();
+      CLIAnimations.showHeader("Design Description:", "💭", "blue");
+      CLIAnimations.showInfo(result.object.description, "💭");
 
-      // Transform to registry format
       const registryTheme = transformToRegistryTheme(result.object);
 
       return {
@@ -60,10 +65,6 @@ export class ThemeGeneratorService {
         themeName: result.object.theme.name,
       };
     } catch (error) {
-      console.error(
-        "❌ Error generating theme:",
-        error instanceof Error ? error.message : "Unknown error"
-      );
       throw error;
     }
   }

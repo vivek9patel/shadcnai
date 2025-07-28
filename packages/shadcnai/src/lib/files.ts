@@ -5,6 +5,7 @@ import {
   PACKAGE_MANAGERS,
   type PackageManager,
 } from "./utils";
+import { CLIAnimations } from "./animations";
 
 export interface SaveThemeOptions {
   outputDir?: string;
@@ -38,17 +39,14 @@ export class FileService {
     const registryPath = join(outputDir, `${themeName}-registry.json`);
 
     try {
-      // Save the registry file
       writeFileSync(registryPath, JSON.stringify(registryTheme, null, 2));
 
       if (autoImport) {
         return await this.importTheme(registryPath, packageManager);
       } else {
-        console.log("💾 Files saved:");
-        console.log(`• Registry JSON: ${registryPath}`);
-        console.log();
-
-        console.log("💡 Next steps:");
+        CLIAnimations.showSuccess("Files saved successfully!", "💾");
+        CLIAnimations.showInfo(`Registry JSON: ${registryPath}`, "📄");
+        CLIAnimations.showHeader("Next steps:", "💡", "yellow");
         console.log(`• Run: npx shadcn@latest add ${registryPath}`);
         console.log("• Or remove --no-import flag for automatic import");
 
@@ -57,7 +55,7 @@ export class FileService {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("❌ Error saving files:", errorMessage);
+      CLIAnimations.showError(`Failed to save files: ${errorMessage}`);
       return { success: false, error: errorMessage };
     }
   }
@@ -76,18 +74,20 @@ export class FileService {
 
       await importThemeWithShadcn(registryPath, selectedPackageManager);
 
-      console.log(
-        "\n🎉 Theme has been successfully imported into your project!"
+      CLIAnimations.showSuccess(
+        "Theme has been successfully imported into your project!",
+        "🎉"
       );
-      console.log(
-        "💡 You can now use your custom theme in your shadcn/ui components."
+      CLIAnimations.showInfo(
+        "You can now use your custom theme in your shadcn/ui components.",
+        "💡"
       );
 
       return { success: true, filePath: registryPath };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      console.error("❌ Error during theme import:", errorMessage);
+      CLIAnimations.showError(`Theme import failed: ${errorMessage}`);
 
       // Clean up the file if it still exists and import failed
       try {
@@ -104,12 +104,12 @@ export class FileService {
    * Display theme without saving
    */
   static displayTheme(registryTheme: any): void {
-    console.log("💡 Next steps:");
+    CLIAnimations.showHeader("Next steps:", "💡", "yellow");
     console.log("• Save the registry JSON below to a file");
     console.log("• Run: npx shadcn@latest add ./your-theme.json");
     console.log("• Or remove --no-save --no-import flags for automatic import");
 
-    console.log("\n📄 Registry JSON:");
+    CLIAnimations.showHeader("Registry JSON:", "📄", "blue");
     console.log(JSON.stringify(registryTheme, null, 2));
   }
 
@@ -117,10 +117,11 @@ export class FileService {
    * Display manual import instructions
    */
   static displayManualImportInstructions(registryTheme: any): void {
-    console.log("\n📋 Manual import instructions:");
+    CLIAnimations.showHeader("Manual import instructions:", "📋", "yellow");
     console.log("• Save the registry JSON below to a file");
     console.log("• Run: npx shadcn@latest add ./your-theme.json");
-    console.log("\n📄 Registry JSON:");
+
+    CLIAnimations.showHeader("Registry JSON:", "📄", "blue");
     console.log(JSON.stringify(registryTheme, null, 2));
   }
 }
