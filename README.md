@@ -36,9 +36,6 @@ npx shadcnai theme "wild creative theme" --temperature 1.5  # More creative/dive
 
 # Generate and save without auto-import
 npx shadcnai theme "minimalist design" --no-import
-
-# Specify package manager
-npx shadcnai theme "modern glassmorphism" --package-manager pnpm
 ```
 
 ## Supported Models
@@ -87,15 +84,13 @@ npx shadcnai theme "modern glassmorphism" --package-manager pnpm
 - `llama3.1-70b`
 - `llama3.3-70b`
 
-want more models? - creat a github issue
+want more models? - create a [github issue](https://github.com/vivek9patel/shadcnai/issues)
 
 ## Package
 
 - **[`packages/shadcnai/`](./packages/shadcnai/)** - The main CLI package with full documentation
 
-## Special Mentions
-
-Built with:
+## Built with
 
 - **[AI SDK](https://sdk.vercel.ai/)** - For AI model integrations
 - **[shadcn/ui](https://ui.shadcn.com/)** - For the component system
