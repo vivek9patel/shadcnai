@@ -1,8 +1,15 @@
 import { generateObject } from "ai";
 import { ThemeGenerationLLMResponseSchema } from "../types/theme";
 import { THEME_GENERATION_PROMPT } from "../prompts/theme-generation";
-import { getModel, isValidModel, type SupportedModel } from "../lib/models";
-import { DEFAULT_MODEL, SUPPORTED_MODELS } from "../constants/models";
+import { getModel } from "../lib/models";
+import {
+  DEFAULT_MODEL,
+  SUPPORTED_MODELS,
+  AI_PROVIDERS,
+  getProviderForModel,
+  isValidModel,
+  type SupportedModel,
+} from "../constants/models";
 import {
   findEnvFiles,
   getEnvFromFiles,
@@ -20,16 +27,14 @@ function getRequiredEnvVar(model: SupportedModel): {
   key: string;
   name: string;
 } {
-  switch (model) {
-    case "gpt-4.1":
-      return { key: "OPENAI_API_KEY", name: "OpenAI" };
-    case "gemini-2.5-flash":
-      return { key: "GOOGLE_GENERATIVE_AI_API_KEY", name: "Google AI" };
-    case "llama-4-scout":
-      return { key: "CEREBRAS_API_KEY", name: "Cerebras" };
-    default:
-      return { key: "GOOGLE_GENERATIVE_AI_API_KEY", name: "Google AI" };
+  const providerInfo = getProviderForModel(model);
+  if (providerInfo) {
+    return { key: providerInfo.envKey, name: providerInfo.name };
   }
+
+  // Fallback to default model provider
+  const defaultProviderInfo = getProviderForModel(DEFAULT_MODEL);
+  return { key: defaultProviderInfo!.envKey, name: defaultProviderInfo!.name };
 }
 
 async function validateEnvironment(model: SupportedModel): Promise<boolean> {
@@ -61,7 +66,11 @@ async function validateEnvironment(model: SupportedModel): Promise<boolean> {
         `\n💡 Tip: ${DEFAULT_MODEL} is the default model. You can also use:`
       );
       console.error(`  --model gpt-4.1 (requires OPENAI_API_KEY)`);
-      console.error(`  --model llama-4-scout (requires CEREBRAS_API_KEY)`);
+      console.error(
+        `  --model claude-3-5-sonnet-20241022 (requires ANTHROPIC_API_KEY)`
+      );
+      console.error(`  --model grok-beta (requires XAI_API_KEY)`);
+      console.error(`  --model deepseek-chat (requires DEEPSEEK_API_KEY)`);
     }
 
     // Only show .env file options if we haven't already tried auto-loading
@@ -227,7 +236,15 @@ export const themeCommand = {
     },
     model: {
       alias: "m",
-      describe: `AI model to use for generation (default: ${DEFAULT_MODEL})`,
+      describe:
+        `AI model to use for generation (default: ${DEFAULT_MODEL}). Available models:\n` +
+        `  Google AI: ${AI_PROVIDERS.google.models.join(", ")}\n` +
+        `  OpenAI: ${AI_PROVIDERS.openai.models.join(", ")}\n` +
+        `  Anthropic: ${AI_PROVIDERS.anthropic.models.join(", ")}\n` +
+        `  xAI: ${AI_PROVIDERS.xai.models.join(", ")}\n` +
+        `  DeepSeek: ${AI_PROVIDERS.deepseek.models.join(", ")}\n` +
+        `  Mistral: ${AI_PROVIDERS.mistral.models.join(", ")}\n` +
+        `  Cerebras: ${AI_PROVIDERS.cerebras.models.join(", ")}`,
       type: "string" as const,
       choices: SUPPORTED_MODELS,
       default: DEFAULT_MODEL,

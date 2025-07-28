@@ -1,9 +1,15 @@
 import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
 import { cerebras } from "@ai-sdk/cerebras";
-import { SUPPORTED_MODELS, DEFAULT_MODEL } from "../constants/models";
-
-export type SupportedModel = (typeof SUPPORTED_MODELS)[number];
+import { anthropic } from "@ai-sdk/anthropic";
+import { xai } from "@ai-sdk/xai";
+import { deepseek } from "@ai-sdk/deepseek";
+import { mistral } from "@ai-sdk/mistral";
+import {
+  DEFAULT_MODEL,
+  getProviderForModel,
+  type SupportedModel,
+} from "../constants/models";
 
 /**
  * Gets the appropriate AI SDK model instance based on the model name
@@ -11,24 +17,47 @@ export type SupportedModel = (typeof SUPPORTED_MODELS)[number];
  * @returns The configured model instance
  */
 export function getModel(model: SupportedModel = DEFAULT_MODEL) {
-  switch (model) {
-    case "gpt-4.1":
-      return openai("gpt-4.1");
-    case "gemini-2.5-flash":
-      return google("gemini-2.5-flash");
-    case "llama-4-scout":
-      return cerebras("llama-4-scout-17b-16e-instruct");
+  const providerInfo = getProviderForModel(model);
+
+  if (!providerInfo) {
+    throw new Error(`Unsupported model: ${model}`);
+  }
+
+  switch (providerInfo.key) {
+    case "google":
+      return google(model);
+
+    case "openai":
+      return openai(model);
+
+    case "anthropic":
+      return anthropic(model);
+
+    case "xai":
+      return xai(model);
+
+    case "deepseek":
+      return deepseek(model);
+
+    case "mistral":
+      return mistral(model);
+
+    case "cerebras":
+      // Map new cerebras model names to their full identifiers
+      switch (model) {
+        case "llama3.1-8b":
+          return cerebras("llama3.1-8b");
+        case "llama3.1-70b":
+          return cerebras("llama3.1-70b");
+        case "llama3.3-70b":
+          return cerebras("llama3.3-70b");
+        default:
+          return cerebras(model);
+      }
+
     default:
       // Fallback to default model
       return google(DEFAULT_MODEL);
   }
 }
 
-/**
- * Validates if the provided model is supported
- * @param model - The model identifier to validate
- * @returns True if the model is supported, false otherwise
- */
-export function isValidModel(model: string): model is SupportedModel {
-  return SUPPORTED_MODELS.includes(model as SupportedModel);
-} 
