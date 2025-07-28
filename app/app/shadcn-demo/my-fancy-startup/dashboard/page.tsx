@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   BarChart3,
   Bell,
@@ -17,12 +16,7 @@ import {
   Users,
   Target,
   TrendingUp,
-  Filter,
-  Download,
-  ChevronDown,
-  Star,
   Flag,
-  MessageSquare,
   PieChart,
 } from "lucide-react";
 
@@ -38,7 +32,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -65,15 +58,6 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -439,55 +423,39 @@ export default function DashboardPage() {
               <div className="flex items-center space-x-4">
                 <ThemeToggle />
 
-                <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-64 justify-start text-muted-foreground"
-                    >
-                      <Search className="mr-2 h-4 w-4" />
-                      Search projects, tasks...
-                      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 ml-auto">
-                        <span className="text-xs">⌘</span>K
-                      </kbd>
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="p-0">
-                    <Command className="rounded-lg border shadow-md">
-                      <CommandInput placeholder="Type a command or search..." />
-                      <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
-                        <CommandGroup heading="Suggestions">
-                          <CommandItem>
-                            <Target className="mr-2 h-4 w-4" />
-                            <span>Create new project</span>
-                          </CommandItem>
-                          <CommandItem>
-                            <Plus className="mr-2 h-4 w-4" />
-                            <span>Add new task</span>
-                          </CommandItem>
-                          <CommandItem>
-                            <Users className="mr-2 h-4 w-4" />
-                            <span>Invite team member</span>
-                          </CommandItem>
-                        </CommandGroup>
-                        <CommandSeparator />
-                        <CommandGroup heading="Recent">
-                          <CommandItem>
-                            <Clock className="mr-2 h-4 w-4" />
-                            <span>Website Redesign</span>
-                            <CommandShortcut>⌘1</CommandShortcut>
-                          </CommandItem>
-                          <CommandItem>
-                            <Clock className="mr-2 h-4 w-4" />
-                            <span>Mobile App</span>
-                            <CommandShortcut>⌘2</CommandShortcut>
-                          </CommandItem>
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </DialogContent>
-                </Dialog>
+                <Command className="rounded-lg border shadow-md">
+                  <CommandInput placeholder="Type a command or search..." />
+                  <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandGroup heading="Suggestions">
+                      <CommandItem>
+                        <Target className="mr-2 h-4 w-4" />
+                        <span>Create new project</span>
+                      </CommandItem>
+                      <CommandItem>
+                        <Plus className="mr-2 h-4 w-4" />
+                        <span>Add new task</span>
+                      </CommandItem>
+                      <CommandItem>
+                        <Users className="mr-2 h-4 w-4" />
+                        <span>Invite team member</span>
+                      </CommandItem>
+                    </CommandGroup>
+                    <CommandSeparator />
+                    <CommandGroup heading="Recent">
+                      <CommandItem>
+                        <Clock className="mr-2 h-4 w-4" />
+                        <span>Website Redesign</span>
+                        <CommandShortcut>⌘1</CommandShortcut>
+                      </CommandItem>
+                      <CommandItem>
+                        <Clock className="mr-2 h-4 w-4" />
+                        <span>Mobile App</span>
+                        <CommandShortcut>⌘2</CommandShortcut>
+                      </CommandItem>
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
 
                 <Button size="icon" variant="outline">
                   <Bell className="h-4 w-4" />
@@ -905,7 +873,7 @@ export default function DashboardPage() {
                       </Pie>
                       <ChartTooltip
                         content={<ChartTooltipContent />}
-                        formatter={(value: any, name: string) => [
+                        formatter={(value: number, name: string) => [
                           `${value}%`,
                           name,
                         ]}

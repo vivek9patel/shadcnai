@@ -269,8 +269,8 @@ export default function PricingPage() {
               Simple, transparent pricing
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Choose the perfect plan for your team. Always know what you'll
-              pay.
+              Choose the perfect plan for your team. Always know what
+              you&apos;ll pay.
             </p>
 
             {/* Billing Toggle */}
@@ -407,7 +407,7 @@ export default function PricingPage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4">Compare all features</h2>
               <p className="text-xl text-muted-foreground">
-                See exactly what's included in each plan
+                See exactly what&apos;s included in each plan
               </p>
             </div>
 
@@ -613,8 +613,9 @@ export default function PricingPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">
-                      We'll notify you before you reach your limits. You can
-                      upgrade your plan or we'll help you optimize your usage.
+                      We&apos;ll notify you before you reach your limits. You
+                      can upgrade your plan or we&apos;ll help you optimize your
+                      usage.
                     </p>
                   </CardContent>
                 </Card>

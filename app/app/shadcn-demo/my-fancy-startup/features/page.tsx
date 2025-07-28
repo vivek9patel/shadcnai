@@ -568,7 +568,7 @@ export default function FeaturesPage() {
                   <Card className="p-8">
                     <CardContent className="text-center space-y-6">
                       <blockquote className="text-lg font-medium">
-                        "{testimonial.quote}"
+                        &quot;{testimonial.quote}&quot;
                       </blockquote>
                       <div className="flex items-center justify-center space-x-4">
                         <Avatar>

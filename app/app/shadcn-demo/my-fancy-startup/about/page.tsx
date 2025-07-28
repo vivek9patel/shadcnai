@@ -178,9 +178,9 @@ export default function AboutPage() {
             <span className="text-primary"> project management</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            We're a passionate team of builders, designers, and problem-solvers
-            on a mission to help teams everywhere work more effectively and
-            achieve their goals.
+            We&apos;re a passionate team of builders, designers, and
+            problem-solvers on a mission to help teams everywhere work more
+            effectively and achieve their goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
@@ -226,8 +226,8 @@ export default function AboutPage() {
               </p>
               <p className="text-lg text-muted-foreground">
                 Founded in 2019, TaskFlow has grown from a simple idea to a
-                platform trusted by thousands of teams worldwide. We're just
-                getting started.
+                platform trusted by thousands of teams worldwide. We&apos;re
+                just getting started.
               </p>
             </div>
             <div className="relative">
@@ -239,8 +239,8 @@ export default function AboutPage() {
                       Empowering Teams
                     </h3>
                     <p className="text-muted-foreground">
-                      Since day one, we've helped teams complete over 1 million
-                      tasks and achieve their most ambitious goals.
+                      Since day one, we&apos;ve helped teams complete over 1
+                      million tasks and achieve their most ambitious goals.
                     </p>
                   </div>
                 </CardContent>
@@ -327,7 +327,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Meet Our Team</h2>
             <p className="text-xl text-muted-foreground">
-              The people behind TaskFlow's success
+              The people behind TaskFlow&apos;s success
             </p>
           </div>
 
@@ -379,7 +379,7 @@ export default function AboutPage() {
               Backed by Great Investors
             </h2>
             <p className="text-xl text-muted-foreground">
-              We're grateful for the support of world-class investors
+              We&apos;re grateful for the support of world-class investors
             </p>
           </div>
 
@@ -415,8 +415,8 @@ export default function AboutPage() {
                 Want to join our mission?
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
-                We're always looking for talented people who share our passion
-                for building great products.
+                We&apos;re always looking for talented people who share our
+                passion for building great products.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild>

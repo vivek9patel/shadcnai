@@ -104,7 +104,7 @@ export default function LandingPage() {
       avatar:
         "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
       content:
-        "TaskFlow has revolutionized how our team manages projects. We've increased productivity by 40% since switching.",
+        "TaskFlow has revolutionized how our team manages projects. We&apos;ve increased productivity by 40% since switching.",
       rating: 5,
     },
     {
@@ -114,7 +114,7 @@ export default function LandingPage() {
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
       content:
-        "The best project management tool we've ever used. The automation features alone have saved us hours every week.",
+        "The best project management tool we&apos;ve ever used. The automation features alone have saved us hours every week.",
       rating: 5,
     },
     {
@@ -124,7 +124,7 @@ export default function LandingPage() {
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
       content:
-        "TaskFlow's intuitive interface made it easy for our entire team to adopt. We saw results immediately.",
+        "TaskFlow&apos;s intuitive interface made it easy for our entire team to adopt. We saw results immediately.",
       rating: 5,
     },
   ];
@@ -171,7 +171,8 @@ export default function LandingPage() {
                   <DialogHeader>
                     <DialogTitle>TaskFlow in Action</DialogTitle>
                     <DialogDescription>
-                      See how TaskFlow can transform your team's productivity
+                      See how TaskFlow can transform your team&apos;s
+                      productivity
                     </DialogDescription>
                   </DialogHeader>
                   <AspectRatio
@@ -285,7 +286,7 @@ export default function LandingPage() {
                   <CardHeader>
                     <CardTitle>Project Overview Dashboard</CardTitle>
                     <CardDescription>
-                      Get a bird's eye view of all your projects
+                      Get a bird&apos;s eye view of all your projects
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -412,11 +413,13 @@ export default function LandingPage() {
                         <div className="space-y-3">
                           <div className="flex items-center space-x-2 text-sm">
                             <Clock className="h-4 w-4 text-muted-foreground" />
-                            <span>Sarah completed "Design Review"</span>
+                            <span>
+                              Sarah completed &quot;Design Review&quot;
+                            </span>
                           </div>
                           <div className="flex items-center space-x-2 text-sm">
                             <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                            <span>New comment on "Homepage"</span>
+                            <span>New comment on &quot;Homepage&quot;</span>
                           </div>
                           <div className="flex items-center space-x-2 text-sm">
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -441,8 +444,8 @@ export default function LandingPage() {
               Loved by teams worldwide
             </h2>
             <p className="text-xl text-muted-foreground">
-              Don't just take our word for it. Here's what our customers have to
-              say.
+              Don&apos;t just take our word for it. Here&apos;s what our
+              customers have to say.
             </p>
           </div>
 
@@ -486,7 +489,7 @@ export default function LandingPage() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground">
-                        "{testimonial.content}"
+                        &quot;{testimonial.content}&quot;
                       </p>
                     </CardContent>
                   </Card>
@@ -529,8 +532,8 @@ export default function LandingPage() {
                 <AccordionTrigger>Can I change plans later?</AccordionTrigger>
                 <AccordionContent>
                   Absolutely! You can upgrade or downgrade your plan at any
-                  time. Changes take effect immediately, and we'll prorate the
-                  billing accordingly.
+                  time. Changes take effect immediately, and we&apos;ll prorate
+                  the billing accordingly.
                 </AccordionContent>
               </AccordionItem>
 
@@ -549,8 +552,8 @@ export default function LandingPage() {
                 <AccordionTrigger>How secure is my data?</AccordionTrigger>
                 <AccordionContent>
                   We take security seriously. All data is encrypted in transit
-                  and at rest using industry-standard encryption. We're SOC 2
-                  compliant and undergo regular security audits.
+                  and at rest using industry-standard encryption. We&apos;re SOC
+                  2 compliant and undergo regular security audits.
                 </AccordionContent>
               </AccordionItem>
 
